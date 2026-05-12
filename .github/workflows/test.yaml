@@ -65,7 +65,7 @@ jobs:
         run: |
           only_changes=${{ inputs.on_changes_only }}
 
-          if [ ${{ only_changes }} == '' ]; then
+          if [ ${only_changes} == '' ]; then
             if [ ${{ github.event_name }} == 'pull_request' ]; then
               only_changes=true
             elif [ ${{ github.event_name }} == 'push' ]; then
@@ -79,7 +79,7 @@ jobs:
             fi
           fi
 
-          if [ ${{ only_changes }} == 'true' ]; then
+          if [ ${only_changes} == 'true' ]; then
             echo 'features_to_test=${{ needs.find-features.outputs.changed-features }}' >> $GITHUB_OUTPUT
           else
             echo 'features_to_test=${{ needs.find-features.outputs.all-features }}' >> $GITHUB_OUTPUT
