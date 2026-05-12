@@ -31,9 +31,9 @@ runs:
         list-files: json
         filters: |
           src:
-            - src/**/*.sh
+            - src/**/*.{sh,json}
           test:
-            - test/**/*.sh
+            - test/**/*.{sh,json}
 
     - id: feature-finder
       shell: bash
