@@ -1,0 +1,7 @@
+{
+  "name": "dcp-features",
+  "image": "debian",
+  "features": {
+    "../src/claude": "0.0.3"
+  }
+}
