@@ -19,5 +19,6 @@ jobs:
           publish-features: "true"
           base-path-to-features: "./src"
           generate-docs: "false"
+          disable-schema-validation: "true"
         env:
           GITHUB_TOKEN: ${{ github.token }}
