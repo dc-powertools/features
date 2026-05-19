@@ -17,5 +17,5 @@
     "containerEnv": {
         "CLAUDE_CONFIG_DIR": "${containerCacheFolder}/.claude"
     },
-    "entrypoint": ["claude"]
+    "command": ["claude"]
 }
