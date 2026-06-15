@@ -1,7 +1,8 @@
 {
   "name": "dcp-features",
   "image": "debian",
+  "containerUser": "root",
   "features": {
-    "../src/claude": "0.0.3"
+    "../src/codex": "0.0.1"
   }
 }
