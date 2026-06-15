@@ -1,6 +1,6 @@
 {
     "id": "claude",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "name": "Claude Code",
     "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/claude",
     "description": "Installs Claude Code CLI and configures it to store state in the `dcc` session cache.",

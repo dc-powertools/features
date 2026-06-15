@@ -1,0 +1,7 @@
+{
+  "name": "dcp-features-codex",
+  "image": "debian",
+  "features": {
+    "../src/codex": {}
+  }
+}

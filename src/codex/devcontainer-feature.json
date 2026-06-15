@@ -17,5 +17,6 @@
     "containerEnv": {
         "CODEX_HOME": "${containerCacheFolder}/.codex"
     },
+    "onCreateCommand": "/usr/local/share/codex/onCreate.sh",
     "command": ["codex"]
 }

@@ -10,9 +10,14 @@ apt-get -y install --no-install-recommends ca-certificates curl  >/dev/null
 
 # https://chatgpt.com/codex/install.sh
 CODEX_NON_INTERACTIVE=1 \
-  CODEX_INSTALL_DIR=/usr/local/bin \
+  CODEX_HOME= \
   VERSION="$VERSION" \
-  bash "$(dirname "$0")/bootstrap.sh"
+  su "$_REMOTE_USER" -c "'$(dirname "$0")/bootstrap.sh'"
+
+ln -s "/home/$_REMOTE_USER/.local/bin/codex" /usr/local/bin/codex
+
+mkdir -p /usr/local/share/codex/
+cp {./,/usr/local/share/codex/}onCreate.sh
 
 # clean up apt-get
 apt-get clean  >/dev/null
