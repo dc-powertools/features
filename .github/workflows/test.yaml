@@ -6,38 +6,28 @@ on:
     branches: [main]
 
 jobs:
-  test-node:
+  discover:
     runs-on: ubuntu-latest
+    outputs:
+      features: ${{ steps.list.outputs.features }}
     steps:
       - uses: actions/checkout@v3
-      - name: Test node (latest)
-        run: test/run.sh node test/node/test_debian.sh
-      - name: Test node (22.14.0)
-        run: VERSION=22.14.0 test/run.sh node test/node/test_specific_version.sh
+      - id: list
+        run: |
+          features=$(find test -maxdepth 2 -name 'scenarios.json' \
+            | sed 's|test/||;s|/scenarios.json||' \
+            | sort \
+            | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "features=$features" >> "$GITHUB_OUTPUT"
 
-  test-rust:
+  test:
+    needs: discover
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        feature: ${{ fromJSON(needs.discover.outputs.features) }}
     steps:
       - uses: actions/checkout@v3
-      - name: Test rust (stable)
-        run: VERSION=stable test/run.sh rust test/rust/test_debian.sh
-      - name: Test rust (no fmt)
-        run: VERSION=stable FMT=false test/run.sh rust test/rust/test_no_fmt.sh
-      - name: Test rust (no clippy)
-        run: VERSION=stable CLIPPY=false test/run.sh rust test/rust/test_no_clippy.sh
-
-  test-sudo:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Test sudo
-        run: test/run.sh sudo test/sudo/test_debian.sh
-
-  test-claude:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Test claude (latest)
-        run: test/run.sh claude test/claude/test_debian.sh
-      - name: Test claude (specific version)
-        run: VERSION=2.0.30 test/run.sh claude test/claude/test_specific_version.sh
+      - name: Test ${{ matrix.feature }}
+        run: test/run-scenarios.sh ${{ matrix.feature }}
