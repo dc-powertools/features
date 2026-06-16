@@ -18,6 +18,5 @@
             "target": "${containerWorkspaceFolder}/node_modules",
             "type": "bind"
         }
-    ],
-    "command": ["node"]
+    ]
 }

@@ -17,5 +17,8 @@
     "containerEnv": {
         "CLAUDE_CONFIG_DIR": "${containerCacheFolder}/.claude"
     },
-    "command": ["claude"]
+    "scripts": {
+      "claude": "claude --continue",
+      "yolo": "claude --continue --dangerously-skip-permissions"
+    }
 }

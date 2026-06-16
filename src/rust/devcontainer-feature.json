@@ -33,6 +33,5 @@
             "target": "${containerWorkspaceFolder}/target",
             "type": "bind"
         }
-    ],
-    "command": ["rustc"]
+    ]
 }
