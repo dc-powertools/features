@@ -14,7 +14,7 @@ CODEX_NON_INTERACTIVE=1 \
   VERSION="$VERSION" \
   su "$_REMOTE_USER" -c "'$(dirname "$0")/bootstrap.sh'"
 
-ln -s "/home/$_REMOTE_USER/.local/bin/codex" /usr/local/bin/codex
+ln -sf "/home/$_REMOTE_USER/.local/bin/codex" /usr/local/bin/codex
 
 mkdir -p /usr/local/share/codex/
 cp {./,/usr/local/share/codex/}onCreate.sh
