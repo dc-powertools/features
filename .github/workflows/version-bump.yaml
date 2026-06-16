@@ -1,0 +1,27 @@
+name: "Features - Version Bump"
+on:
+  push:
+    branches: [main]
+
+jobs:
+  version-bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Bump patch versions for changed features
+        id: bump
+        run: bash .github/scripts/bump-versions.sh "${{ github.event.before }}"
+
+      - name: Commit and push version bumps
+        if: steps.bump.outputs.bumped != '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/*/devcontainer-feature.json
+          git commit -m "chore: bump feature versions [skip ci]"
+          git push
