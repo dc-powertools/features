@@ -1,0 +1,7 @@
+{
+  "name": "dcp-features-node",
+  "image": "debian",
+  "features": {
+    "../src/node": {}
+  }
+}
