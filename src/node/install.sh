@@ -73,7 +73,6 @@ fi
 
 echo "Installing to /usr/local/..."
 tar -xJf "$TARBALL_PATH" -C /usr/local/ --strip-components=1
-echo "Done!"
 
 node --version
 npm --version
