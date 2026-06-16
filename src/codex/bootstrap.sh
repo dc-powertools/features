@@ -636,6 +636,7 @@ detect_conflicting_install() {
   fi
 
   conflict_manager="$manager"
+  # shellcheck disable=SC2034
   conflict_path="$existing_path"
   step "Detected existing $manager-managed Codex at $existing_path"
   warn "Multiple managed Codex installs can be ambiguous because PATH order decides which one runs."

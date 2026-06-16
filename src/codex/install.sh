@@ -10,7 +10,7 @@ apt-get -y install --no-install-recommends ca-certificates curl  >/dev/null
 
 # https://chatgpt.com/codex/install.sh
 CODEX_NON_INTERACTIVE=1 \
-  CODEX_HOME= \
+  CODEX_HOME='' \
   VERSION="$VERSION" \
   su "$_REMOTE_USER" -c "'$(dirname "$0")/bootstrap.sh'"
 

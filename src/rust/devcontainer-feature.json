@@ -27,5 +27,12 @@
         "CARGO_HOME": "/usr/local/cargo",
         "PATH": "${containerEnv:PATH}:/usr/local/cargo/bin"
     },
+    "mounts": [
+        {
+            "source": "${localCacheFolder}/target",
+            "target": "${containerWorkspaceFolder}/target",
+            "type": "bind"
+        }
+    ],
     "command": ["rustc"]
 }

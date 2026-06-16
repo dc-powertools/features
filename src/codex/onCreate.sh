@@ -2,4 +2,4 @@
 
 set -e
 
-mkdir -p $CODEX_HOME
+mkdir -p "$CODEX_HOME"

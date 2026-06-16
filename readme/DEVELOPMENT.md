@@ -52,7 +52,7 @@ shellcheck src/<feature>/install.sh
 
 # Lint everything at once
 find src test -name '*.sh' -o -name 'dev-container-features-test-lib' \
-  | xargs shellcheck
+  | xargs shellcheck -x
 ```
 
 Common issues to watch for:
