@@ -1,0 +1,7 @@
+{
+    "name": "dcp-features-git",
+    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "features": {
+        "../src/git": {}
+    }
+}
