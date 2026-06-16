@@ -1,25 +1,25 @@
 {
-    "id": "codex",
-    "version": "0.0.2",
-    "name": "OpenAI Codex",
-    "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/codex",
-    "description": "Installs OpenAI Codex CLI and configures it to store state in the `dcc` session cache.",
-    "options": {
-        "version": {
-            "default": "latest",
-            "description": "Select the version to install.",
-            "proposals": [
-                "latest"
-            ],
-            "type": "string"
-        }
-    },
-    "containerEnv": {
-        "CODEX_HOME": "${containerCacheFolder}/.codex"
-    },
-    "onCreateCommand": "/usr/local/share/codex/onCreate.sh",
-    "scripts": {
-      "codex": "codex resume",
-      "yolo": "codex resume --yolo"
+  "id": "codex",
+  "version": "0.0.3",
+  "name": "OpenAI Codex",
+  "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/codex",
+  "description": "Installs OpenAI Codex CLI and configures it to store state in the `dcc` session cache.",
+  "options": {
+    "version": {
+      "default": "latest",
+      "description": "Select the version to install.",
+      "proposals": [
+        "latest"
+      ],
+      "type": "string"
     }
+  },
+  "containerEnv": {
+    "CODEX_HOME": "${containerCacheFolder}/.codex"
+  },
+  "onCreateCommand": "/usr/local/share/codex/onCreate.sh",
+  "scripts": {
+    "codex": "codex resume",
+    "yolo": "codex resume --yolo"
+  }
 }
