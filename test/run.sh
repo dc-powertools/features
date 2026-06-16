@@ -27,7 +27,7 @@ if [ "$(id -u)" = "0" ]; then
     VERSION="$VERSION" _REMOTE_USER="$_REMOTE_USER" \
         bash "$REPO_ROOT/src/$FEATURE/install.sh"
 elif command -v sudo >/dev/null 2>&1; then
-    sudo env VERSION="$VERSION" _REMOTE_USER="$_REMOTE_USER" \
+    sudo -E VERSION="$VERSION" _REMOTE_USER="$_REMOTE_USER" \
         bash "$REPO_ROOT/src/$FEATURE/install.sh"
 else
     echo "WARNING: not root and no sudo — skipping install (assuming feature is pre-installed)" >&2

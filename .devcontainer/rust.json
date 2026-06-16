@@ -1,0 +1,7 @@
+{
+  "name": "dcp-features-rust",
+  "image": "debian",
+  "features": {
+    "../src/rust": {}
+  }
+}

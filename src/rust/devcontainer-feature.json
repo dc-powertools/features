@@ -1,0 +1,31 @@
+{
+    "id": "rust",
+    "version": "0.0.1",
+    "name": "Rust",
+    "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/rust",
+    "description": "Installs the Rust toolchain via rustup, including rustfmt and clippy.",
+    "options": {
+        "version": {
+            "default": "stable",
+            "description": "Toolchain version to install ('stable', 'nightly', or a specific version like '1.85.0').",
+            "proposals": ["stable", "nightly"],
+            "type": "string"
+        },
+        "fmt": {
+            "default": "true",
+            "description": "Install rustfmt.",
+            "type": "boolean"
+        },
+        "clippy": {
+            "default": "true",
+            "description": "Install clippy.",
+            "type": "boolean"
+        }
+    },
+    "containerEnv": {
+        "RUSTUP_HOME": "/usr/local/rustup",
+        "CARGO_HOME": "/usr/local/cargo",
+        "PATH": "${containerEnv:PATH}:/usr/local/cargo/bin"
+    },
+    "command": ["rustc"]
+}

@@ -15,6 +15,17 @@ jobs:
       - name: Test node (22.14.0)
         run: VERSION=22.14.0 test/run.sh node test/node/test_specific_version.sh
 
+  test-rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test rust (stable)
+        run: VERSION=stable test/run.sh rust test/rust/test_debian.sh
+      - name: Test rust (no fmt)
+        run: VERSION=stable FMT=false test/run.sh rust test/rust/test_no_fmt.sh
+      - name: Test rust (no clippy)
+        run: VERSION=stable CLIPPY=false test/run.sh rust test/rust/test_no_clippy.sh
+
   test-sudo:
     runs-on: ubuntu-latest
     steps:
