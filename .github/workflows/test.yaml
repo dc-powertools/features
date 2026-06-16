@@ -1,0 +1,32 @@
+name: "Features - Test"
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test node (latest)
+        run: test/run.sh node test/node/test_debian.sh
+      - name: Test node (22.14.0)
+        run: VERSION=22.14.0 test/run.sh node test/node/test_specific_version.sh
+
+  test-sudo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test sudo
+        run: test/run.sh sudo test/sudo/test_debian.sh
+
+  test-claude:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test claude (latest)
+        run: test/run.sh claude test/claude/test_debian.sh
+      - name: Test claude (specific version)
+        run: VERSION=2.0.30 test/run.sh claude test/claude/test_specific_version.sh

@@ -1,0 +1,7 @@
+{
+  "name": "dcp-features-sudo",
+  "image": "debian",
+  "features": {
+    "../src/sudo": {}
+  }
+}

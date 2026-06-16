@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+# Bundled fallback for the devcontainers test library.
+# The real library is injected by the devcontainers testing framework;
+# this copy is used when running tests directly (CI containers, dcc run, etc.).
+
+PASS=0
+FAIL=0
+
+check() {
+    local description="$1"
+    shift
+    if "$@" >/dev/null 2>&1; then
+        echo "  PASS: $description"
+        PASS=$((PASS + 1))
+    else
+        echo "  FAIL: $description"
+        FAIL=$((FAIL + 1))
+    fi
+}
+
+reportResults() {
+    echo ""
+    if [ "$FAIL" -eq 0 ]; then
+        echo "All $PASS test(s) passed."
+    else
+        echo "$FAIL of $((PASS + FAIL)) test(s) failed."
+    fi
+    [ "$FAIL" -eq 0 ]
+}
