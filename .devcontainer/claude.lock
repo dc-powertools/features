@@ -1,0 +1,17 @@
+{
+  "dccVersion": "0.0.21",
+  "features": [
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/sudo",
+      "resolved": "sha256:f4e0e15e8c2d283da52ebae182da0aecde350075b3d09a01389c9fdf9d442ecc"
+    },
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/claude",
+      "resolved": "sha256:e42a0830fb1927d78d9f25bcccb2d81fb4118d1cfc17c9f71ad33fa680882d1d"
+    }
+  ]
+}

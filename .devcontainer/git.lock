@@ -1,0 +1,11 @@
+{
+  "dccVersion": "0.0.21",
+  "features": [
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/git",
+      "resolved": "sha256:43c422253b536d825e6f28a7b8c7a1835844a1f8aa66467eb4b7b472c798648c"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "dccVersion": "0.0.21",
+  "features": [
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/node",
+      "resolved": "sha256:cdd5f5f84119be69592df081f3a5e81d2a05cd4b8cd5b800a68aceb6f3ae3c5c"
+    }
+  ]
+}
