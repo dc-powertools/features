@@ -27,8 +27,7 @@
   },
   "containerEnv": {
     "RUSTUP_HOME": "${containerCacheFolder}/.rustup",
-    "CARGO_HOME": "${containerCacheFolder}/.cargo",
-    "PATH": "${containerCacheFolder}/.cargo/bin:${containerEnv:PATH}"
+    "CARGO_HOME": "${containerCacheFolder}/.cargo"
   },
   "onCreateCommand": "/usr/local/share/rust/onCreate.sh",
   "mounts": [
