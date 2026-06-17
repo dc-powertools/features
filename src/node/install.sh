@@ -4,11 +4,7 @@ set -e
 
 # Install prerequisites
 apt-get update -y >/dev/null
-if command -v curl >/dev/null 2>&1; then
-    apt-get -y install --no-install-recommends ca-certificates xz-utils libatomic1 >/dev/null
-else
-    apt-get -y install --no-install-recommends ca-certificates curl xz-utils libatomic1 >/dev/null
-fi
+apt-get -y install --no-install-recommends ca-certificates curl xz-utils libatomic1 >/dev/null
 
 # Detect architecture
 ARCH="$(uname -m)"
