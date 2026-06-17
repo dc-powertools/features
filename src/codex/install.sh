@@ -3,8 +3,10 @@
 set -e
 
 # Ensure downloader is available
-apt-get update -y  >/dev/null
-apt-get -y install --no-install-recommends ca-certificates curl  >/dev/null
+if ! command -v curl >/dev/null 2>&1; then
+    apt-get update -y >/dev/null
+    apt-get -y install --no-install-recommends ca-certificates curl >/dev/null
+fi
 
 # See instructions at https://code.claude.com/docs/en/setup
 
