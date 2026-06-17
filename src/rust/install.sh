@@ -9,8 +9,10 @@ VERSION="${VERSION:-stable}"
 FMT="${FMT:-true}"
 CLIPPY="${CLIPPY:-true}"
 
-apt-get update -y >/dev/null
-apt-get -y install --no-install-recommends ca-certificates curl >/dev/null
+if ! command -v curl >/dev/null 2>&1; then
+    apt-get update -y >/dev/null
+    apt-get -y install --no-install-recommends ca-certificates curl >/dev/null
+fi
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
     | sh -s -- -y --no-modify-path --profile minimal --default-toolchain "$VERSION"
