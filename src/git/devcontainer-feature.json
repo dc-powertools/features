@@ -1,16 +1,16 @@
 {
-    "id": "git",
-    "version": "0.0.1",
-    "name": "Git",
-    "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/git",
-    "description": "Installs git and copies the host user's global gitconfig into the container at startup.",
-    "mounts": [
-        {
-            "source": "${localEnv:HOME}/.gitconfig",
-            "target": "/run/host-gitconfig",
-            "readonly": true,
-            "type": "bind"
-        }
-    ],
-    "onCreateCommand": "/usr/local/share/git/onCreate.sh"
+  "id": "git",
+  "version": "0.0.2",
+  "name": "Git",
+  "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/git",
+  "description": "Installs git and copies the host user's global gitconfig into the container at startup.",
+  "mounts": [
+    {
+      "source": "${localEnv:HOME}/.gitconfig",
+      "target": "/run/host-gitconfig",
+      "readonly": true,
+      "type": "bind"
+    }
+  ],
+  "onCreateCommand": "/usr/local/share/git/onCreate.sh"
 }
