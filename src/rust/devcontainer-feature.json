@@ -1,6 +1,6 @@
 {
   "id": "rust",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "name": "Rust",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/rust",
   "description": "Installs the Rust toolchain via rustup, including rustfmt and clippy.",
@@ -26,10 +26,11 @@
     }
   },
   "containerEnv": {
-    "RUSTUP_HOME": "/usr/local/rustup",
-    "CARGO_HOME": "/usr/local/cargo",
-    "PATH": "${containerEnv:PATH}:/usr/local/cargo/bin"
+    "RUSTUP_HOME": "${containerCacheFolder}/.rustup",
+    "CARGO_HOME": "${containerCacheFolder}/.cargo",
+    "PATH": "${containerCacheFolder}/.cargo/bin:${containerEnv:PATH}"
   },
+  "onCreateCommand": "/usr/local/share/rust/onCreate.sh",
   "mounts": [
     {
       "source": "${localCacheFolder}/target",

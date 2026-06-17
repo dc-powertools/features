@@ -25,6 +25,9 @@ if [ "$CLIPPY" = "true" ]; then
     rustup component add clippy
 fi
 
+mkdir -p /usr/local/share/rust
+cp "$(dirname "$0")/onCreate.sh" /usr/local/share/rust/onCreate.sh
+
 chown -R "$_REMOTE_USER:$_REMOTE_USER" "$RUSTUP_HOME" "$CARGO_HOME"
 
 rustc --version
