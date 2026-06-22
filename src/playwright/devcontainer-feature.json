@@ -1,6 +1,6 @@
 {
   "id": "playwright",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "name": "Playwright System Dependencies",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/playwright",
   "description": "Installs system libraries required by Playwright browsers and caches browser binaries across dcc run invocations.",
