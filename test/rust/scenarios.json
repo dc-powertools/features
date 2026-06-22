@@ -24,5 +24,14 @@
                 "clippy": false
             }
         }
+    },
+    "test_no_gcc": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "rust": {
+                "version": "stable",
+                "gcc": false
+            }
+        }
     }
 }

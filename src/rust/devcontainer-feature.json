@@ -23,6 +23,11 @@
       "default": "true",
       "description": "Install clippy.",
       "type": "boolean"
+    },
+    "gcc": {
+      "default": "true",
+      "description": "Install gcc (required by crates that compile C code).",
+      "type": "boolean"
     }
   },
   "containerEnv": {

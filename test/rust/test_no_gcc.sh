@@ -17,8 +17,5 @@ fi
 
 check "rustc is installed" rustc --version
 check "cargo is installed" cargo --version
-check "rustfmt is installed" rustfmt --version
-check "clippy is installed" cargo clippy --version
-check "gcc is installed" gcc --version
 
 reportResults

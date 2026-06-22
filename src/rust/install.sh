@@ -8,10 +8,13 @@ export CARGO_HOME=/usr/local/cargo
 VERSION="${VERSION:-stable}"
 FMT="${FMT:-true}"
 CLIPPY="${CLIPPY:-true}"
+GCC="${GCC:-true}"
 
-if ! command -v curl >/dev/null 2>&1; then
-    apt-get update -y >/dev/null
-    apt-get -y install --no-install-recommends ca-certificates curl >/dev/null
+apt-get update -y >/dev/null
+apt-get -y install --no-install-recommends ca-certificates curl >/dev/null
+
+if [ "$GCC" = "true" ]; then
+    apt-get -y install --no-install-recommends gcc >/dev/null
 fi
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
