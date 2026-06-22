@@ -1,7 +1,7 @@
 name: "Features - Release"
 on:
   workflow_run:
-    workflows: ["Features - Version Bump"]
+    workflows: ["Features - Main"]
     types: [completed]
     branches: [main]
   workflow_dispatch:

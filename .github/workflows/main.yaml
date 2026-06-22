@@ -1,10 +1,14 @@
-name: "Features - Version Bump"
+name: "Features - Main"
 on:
   push:
     branches: [main]
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yaml
+
   version-bump:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: write
