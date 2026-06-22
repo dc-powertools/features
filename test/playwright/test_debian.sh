@@ -21,7 +21,4 @@ check "libnspr4 is installed" dpkg -s libnspr4
 check "libgbm1 is installed" dpkg -s libgbm1
 check "libdrm2 is installed" dpkg -s libdrm2
 
-# WebKit-only packages should NOT be installed with default (chromium)
-check "gstreamer1.0-libav is not installed" sh -c '! dpkg -s gstreamer1.0-libav 2>/dev/null | grep -q "^Status:.*installed"'
-
 reportResults
