@@ -121,6 +121,7 @@ dcc extends the standard devcontainer variable set with cache-aware variables:
 |---|---|---|
 | `claude` | Claude Code CLI | `CLAUDE_CONFIG_DIR` → `${containerCacheFolder}/.claude` |
 | `codex` | OpenAI Codex CLI | `CODEX_HOME` → `${containerCacheFolder}/.codex` |
+| `linux-package` | A system package via apt/dnf/yum | none |
 | `node` | Node.js (system-wide) | bind mount `node_modules` from `${localCacheFolder}/node_modules` |
 | `playwright` | Playwright browser system dependencies | `PLAYWRIGHT_BROWSERS_PATH` → `${containerCacheFolder}/.playwright` |
 | `sudo` | sudo + passwordless grant for `$_REMOTE_USER` | none |

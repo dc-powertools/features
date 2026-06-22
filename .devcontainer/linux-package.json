@@ -1,0 +1,7 @@
+{
+  "name": "dcp-features-linux-package",
+  "image": "debian",
+  "features": {
+    "../src/linux-package": {}
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "linux-package",
+  "version": "0.0.1",
+  "name": "Linux Package",
+  "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/linux-package",
+  "description": "Installs a system package via the native package manager (apt-get, dnf, or yum).",
+  "options": {
+    "package": {
+      "default": "",
+      "description": "Package to install (apt name, or common name if identical across distros).",
+      "type": "string"
+    },
+    "yumPackage": {
+      "default": "",
+      "description": "Override package name for yum/dnf systems. If empty, uses 'package'.",
+      "type": "string"
+    }
+  }
+}
