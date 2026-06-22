@@ -2,8 +2,6 @@
   "name": "dcp-features-claude",
   "image": "debian",
   "features": {
-    "../src/sudo": {},
-    "../src/git": {},
     "../src/claude": {}
   }
 }

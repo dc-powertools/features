@@ -1,0 +1,29 @@
+{
+  "dccVersion": "0.0.26",
+  "features": [
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/sudo",
+      "resolved": "sha256:f4e0e15e8c2d283da52ebae182da0aecde350075b3d09a01389c9fdf9d442ecc"
+    },
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/git",
+      "resolved": "sha256:43c422253b536d825e6f28a7b8c7a1835844a1f8aa66467eb4b7b472c798648c"
+    },
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/rust",
+      "resolved": "sha256:f966dfff038805a5cdc2179d6ff5c1130ec275fa0c63821003f5e2558fc01da8"
+    },
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/claude",
+      "resolved": "sha256:4c99930b74019e0474783f9b10921f19c8bf174bc8478e16a120b4efba89f639"
+    }
+  ]
+}

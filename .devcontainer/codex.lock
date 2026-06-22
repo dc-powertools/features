@@ -1,11 +1,11 @@
 {
-  "dccVersion": "0.0.21",
+  "dccVersion": "0.0.26",
   "features": [
     {
       "direct": true,
       "options": {},
       "ref": "../src/codex",
-      "resolved": "sha256:7e9947021c55cb94da093c35d71f2292d2309f9f211b7aecdc1c293f40583819"
+      "resolved": "sha256:e00467083f5764493332bc37571d43f5eb49088e59939452b403392e784201b3"
     }
   ]
 }

@@ -1,0 +1,11 @@
+{
+  "dccVersion": "0.0.26",
+  "features": [
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/rust",
+      "resolved": "sha256:f966dfff038805a5cdc2179d6ff5c1130ec275fa0c63821003f5e2558fc01da8"
+    }
+  ]
+}

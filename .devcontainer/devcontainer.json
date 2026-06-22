@@ -1,0 +1,10 @@
+{
+  "name": "dcp-features-dev",
+  "image": "debian",
+  "features": {
+    "../src/sudo": {},
+    "../src/git": {},
+    "../src/rust": {},
+    "../src/claude": {}
+  }
+}
