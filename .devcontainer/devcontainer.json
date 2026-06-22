@@ -3,6 +3,9 @@
   "image": "debian",
   "features": {
     "../src/sudo": {},
+    "../src/linux-package": {
+      "package": "shellcheck"
+    },
     "../src/git": {},
     "../src/rust": {},
     "../src/claude": {}

@@ -9,6 +9,14 @@
     },
     {
       "direct": true,
+      "options": {
+        "package": "shellcheck"
+      },
+      "ref": "../src/linux-package",
+      "resolved": "sha256:b567e28479d592f3adb64033446c7c822283f3959ed3a976734f8f0f107510dd"
+    },
+    {
+      "direct": true,
       "options": {},
       "ref": "../src/git",
       "resolved": "sha256:43c422253b536d825e6f28a7b8c7a1835844a1f8aa66467eb4b7b472c798648c"
