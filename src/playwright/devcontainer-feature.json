@@ -18,13 +18,6 @@
     }
   },
   "containerEnv": {
-    "PLAYWRIGHT_BROWSERS_PATH": "${containerCacheFolder}/.playwright"
-  },
-  "mounts": [
-    {
-      "source": "${localCacheFolder}/.playwright",
-      "target": "${containerCacheFolder}/.playwright",
-      "type": "bind"
-    }
-  ]
+    "PLAYWRIGHT_BROWSERS_PATH": "0"
+  }
 }
