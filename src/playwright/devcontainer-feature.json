@@ -1,0 +1,30 @@
+{
+  "id": "playwright",
+  "version": "0.0.1",
+  "name": "Playwright System Dependencies",
+  "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/playwright",
+  "description": "Installs system libraries required by Playwright browsers and caches browser binaries across dcc run invocations.",
+  "options": {
+    "browsers": {
+      "default": "chromium",
+      "description": "Which browser dependencies to install: 'chromium', 'firefox', 'webkit', or 'all'.",
+      "proposals": [
+        "chromium",
+        "all",
+        "firefox",
+        "webkit"
+      ],
+      "type": "string"
+    }
+  },
+  "containerEnv": {
+    "PLAYWRIGHT_BROWSERS_PATH": "${containerCacheFolder}/.playwright"
+  },
+  "mounts": [
+    {
+      "source": "${localCacheFolder}/.playwright",
+      "target": "${containerCacheFolder}/.playwright",
+      "type": "bind"
+    }
+  ]
+}

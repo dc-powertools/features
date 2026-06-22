@@ -1,0 +1,7 @@
+{
+  "name": "dcp-features-playwright",
+  "image": "debian",
+  "features": {
+    "../src/playwright": {}
+  }
+}

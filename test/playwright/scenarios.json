@@ -1,0 +1,16 @@
+{
+    "test_debian": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "playwright": {}
+        }
+    },
+    "test_all_browsers": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "playwright": {
+                "browsers": "all"
+            }
+        }
+    }
+}
