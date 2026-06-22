@@ -18,6 +18,12 @@ if [ ! -f "$SCENARIOS_FILE" ]; then
     exit 1
 fi
 
+SETUP_HOOK="$SCRIPT_DIR/$FEATURE/setup.sh"
+if [ -f "$SETUP_HOOK" ]; then
+    # shellcheck source=/dev/null
+    source "$SETUP_HOOK"
+fi
+
 FAILED=0
 
 while IFS= read -r scenario; do
@@ -35,9 +41,13 @@ while IFS= read -r scenario; do
     )
 
     echo ""
+    if type setup &>/dev/null; then setup; fi
+
     if ! env "${ENV_ARGS[@]}" "$SCRIPT_DIR/run.sh" "$FEATURE" "$TEST_SCRIPT"; then
         FAILED=$((FAILED + 1))
     fi
+
+    if type teardown &>/dev/null; then teardown; fi
 done < <(jq -r 'keys[]' "$SCENARIOS_FILE")
 
 if [ "$FAILED" -gt 0 ]; then
