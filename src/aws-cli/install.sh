@@ -48,14 +48,13 @@ if [ -n "$SSOSTARTURL" ] && [ -n "$SSOREGION" ]; then
         echo "sso_region = $SSOREGION"
         echo "sso_registration_scopes = sso:account:access"
         PROFILE_REGION="${REGION:-$SSOREGION}"
-        if [ -n "$SSOACCOUNTID" ] || [ -n "$SSOROLENAME" ] || [ -n "$PROFILE_REGION" ]; then
-            echo ""
-            echo "[default]"
-            echo "sso_session = default"
-            [ -n "$SSOACCOUNTID" ] && echo "sso_account_id = $SSOACCOUNTID"
-            [ -n "$SSOROLENAME" ] && echo "sso_role_name = $SSOROLENAME"
-            [ -n "$PROFILE_REGION" ] && echo "region = $PROFILE_REGION"
-        fi
+        echo ""
+        echo "[default]"
+        echo "sso_session = default"
+        [ -n "$SSOACCOUNTID" ] && echo "sso_account_id = $SSOACCOUNTID"
+        [ -n "$SSOROLENAME" ] && echo "sso_role_name = $SSOROLENAME"
+        [ -n "$PROFILE_REGION" ] && echo "region = $PROFILE_REGION"
+        echo "cli_pager = "
     } > /usr/local/share/aws-cli/config
 fi
 
