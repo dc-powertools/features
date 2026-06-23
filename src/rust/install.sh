@@ -34,7 +34,10 @@ mkdir -p /usr/local/share/rust
 cp "$(dirname "$0")/onCreate.sh" /usr/local/share/rust/onCreate.sh
 
 cat > /etc/profile.d/rust.sh <<'EOF'
-export PATH="${CARGO_HOME}/bin:${PATH}"
+case ":${PATH}:" in
+    *":${CARGO_HOME}/bin:"*) ;;
+    *) export PATH="${CARGO_HOME}/bin:${PATH}" ;;
+esac
 EOF
 
 chown -R "$_REMOTE_USER:$_REMOTE_USER" "$RUSTUP_HOME" "$CARGO_HOME"
