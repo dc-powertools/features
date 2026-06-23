@@ -37,7 +37,7 @@
   "onCreateCommand": "/usr/local/share/aws-cli/onCreate.sh",
   "command": "aws",
   "scripts": {
-    "sso-configure": "aws configure sso --use-device-code",
-    "sso-login": "aws sso login"
+    "sso-configure": "aws configure sso --use-device-code --profile default",
+    "sso-login": "aws sso login --profile default"
   }
 }
