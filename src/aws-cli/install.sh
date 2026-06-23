@@ -5,6 +5,7 @@ set -e
 SSOSTARTURL="${SSOSTARTURL:-}"
 SSOREGION="${SSOREGION:-}"
 SSOACCOUNTID="${SSOACCOUNTID:-}"
+SSOROLENAME="${SSOROLENAME:-}"
 
 # Install prerequisites
 apt-get update -y >/dev/null
@@ -45,11 +46,12 @@ if [ -n "$SSOSTARTURL" ] && [ -n "$SSOREGION" ]; then
         echo "sso_start_url = $SSOSTARTURL"
         echo "sso_region = $SSOREGION"
         echo "sso_registration_scopes = sso:account:access"
-        if [ -n "$SSOACCOUNTID" ]; then
+        if [ -n "$SSOACCOUNTID" ] || [ -n "$SSOROLENAME" ]; then
             echo ""
             echo "[profile default]"
             echo "sso_session = default"
-            echo "sso_account_id = $SSOACCOUNTID"
+            [ -n "$SSOACCOUNTID" ] && echo "sso_account_id = $SSOACCOUNTID"
+            [ -n "$SSOROLENAME" ] && echo "sso_role_name = $SSOROLENAME"
         fi
     } > /usr/local/share/aws-cli/config
 fi

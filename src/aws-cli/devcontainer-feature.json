@@ -19,6 +19,11 @@
       "default": "",
       "description": "AWS account ID for SSO (e.g., 123456789012).",
       "type": "string"
+    },
+    "ssoRoleName": {
+      "default": "",
+      "description": "AWS IAM role name for SSO (e.g., ReadOnly, PowerUserAccess).",
+      "type": "string"
     }
   },
   "containerEnv": {
