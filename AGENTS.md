@@ -15,3 +15,12 @@ This repository contains [devcontainer features](https://containers.dev/implemen
 - Verify SHA256 checksums before extracting any downloaded archive.
 - Write sudoers drop-in files with mode `0440`.
 - Periodically review the full project for correctness, consistency, and stale pinned versions — see the "Periodic Code Review" section in DEVELOPMENT.md.
+
+
+# Specific Agent Instructions
+
+## Codex
+
+When asking the user a question, always wait for the answer. NEVER use
+auto-resolving questions or default-assumption timeouts. If using
+`request_user_input`, omit `autoResolutionMs`.
