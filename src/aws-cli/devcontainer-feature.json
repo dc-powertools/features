@@ -38,6 +38,6 @@
   "command": "aws",
   "scripts": {
     "sso-configure": "aws configure sso --use-device-code --profile default",
-    "sso-login": "aws sso login --profile default"
+    "sso-login": "aws sso login --use-device-code --profile default"
   }
 }
