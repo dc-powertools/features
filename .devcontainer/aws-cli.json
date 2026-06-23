@@ -1,0 +1,7 @@
+{
+  "name": "dcp-features-aws-cli",
+  "image": "debian",
+  "features": {
+    "../src/aws-cli": {}
+  }
+}

@@ -119,6 +119,7 @@ dcc extends the standard devcontainer variable set with cache-aware variables:
 
 | Feature | What it installs | Cache strategy |
 |---|---|---|
+| `aws-cli` | AWS CLI v2 | `AWS_CONFIG_FILE` → `${containerCacheFolder}/.aws/config` |
 | `claude` | Claude Code CLI | `CLAUDE_CONFIG_DIR` → `${containerCacheFolder}/.claude` |
 | `codex` | OpenAI Codex CLI | `CODEX_HOME` → `${containerCacheFolder}/.codex` |
 | `linux-package` | A system package via apt/dnf/yum | none |

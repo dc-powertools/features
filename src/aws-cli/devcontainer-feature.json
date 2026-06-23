@@ -1,0 +1,28 @@
+{
+  "id": "aws-cli",
+  "version": "0.0.1",
+  "name": "AWS CLI",
+  "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/aws-cli",
+  "description": "Installs the AWS CLI v2 with SSO configuration support.",
+  "options": {
+    "ssoStartUrl": {
+      "default": "",
+      "description": "AWS SSO start URL (e.g., https://my-portal.awsapps.com/start).",
+      "type": "string"
+    },
+    "ssoRegion": {
+      "default": "",
+      "description": "AWS region for SSO (e.g., us-east-1).",
+      "type": "string"
+    }
+  },
+  "containerEnv": {
+    "AWS_CONFIG_FILE": "${containerCacheFolder}/.aws/config"
+  },
+  "onCreateCommand": "/usr/local/share/aws-cli/onCreate.sh",
+  "command": "aws",
+  "scripts": {
+    "sso:configure": "aws configure sso",
+    "sso:login": "aws sso login"
+  }
+}
