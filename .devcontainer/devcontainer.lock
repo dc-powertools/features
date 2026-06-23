@@ -1,5 +1,5 @@
 {
-  "dccVersion": "0.0.26",
+  "dccVersion": "0.0.30",
   "features": [
     {
       "direct": true,
@@ -25,13 +25,19 @@
       "direct": true,
       "options": {},
       "ref": "../src/rust",
-      "resolved": "sha256:f966dfff038805a5cdc2179d6ff5c1130ec275fa0c63821003f5e2558fc01da8"
+      "resolved": "sha256:bcabf0479f83b0c33b0ffb4969b0794ab39d4f8325f0402c51c3a6abfd2d5478"
     },
     {
       "direct": true,
       "options": {},
       "ref": "../src/claude",
       "resolved": "sha256:4c99930b74019e0474783f9b10921f19c8bf174bc8478e16a120b4efba89f639"
+    },
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/codex",
+      "resolved": "sha256:e00467083f5764493332bc37571d43f5eb49088e59939452b403392e784201b3"
     }
   ]
 }

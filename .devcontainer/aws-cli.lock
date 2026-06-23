@@ -5,7 +5,7 @@
       "direct": true,
       "options": {},
       "ref": "../src/aws-cli",
-      "resolved": "sha256:7856e598987b256a418e01bd4afdf8aa256e24d34e5c3f75dbc4f9fb0067dfb2"
+      "resolved": "sha256:fb90aeaf2ec644c269505e79ad0bcbaa8880326ea7056498014a057362417c31"
     }
   ]
 }
