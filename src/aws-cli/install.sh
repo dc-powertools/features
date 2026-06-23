@@ -50,7 +50,7 @@ if [ -n "$SSOSTARTURL" ] && [ -n "$SSOREGION" ]; then
         PROFILE_REGION="${REGION:-$SSOREGION}"
         if [ -n "$SSOACCOUNTID" ] || [ -n "$SSOROLENAME" ] || [ -n "$PROFILE_REGION" ]; then
             echo ""
-            echo "[profile default]"
+            echo "[default]"
             echo "sso_session = default"
             [ -n "$SSOACCOUNTID" ] && echo "sso_account_id = $SSOACCOUNTID"
             [ -n "$SSOROLENAME" ] && echo "sso_role_name = $SSOROLENAME"
