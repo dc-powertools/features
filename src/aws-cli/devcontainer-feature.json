@@ -31,9 +31,13 @@
       "type": "string"
     }
   },
-  "containerEnv": {
-    "AWS_CONFIG_FILE": "${containerCacheFolder}/.aws/config"
-  },
+  "mounts": [
+    {
+      "source": "${localCacheFolder}/.aws",
+      "target": "${containerEnv:HOME}/.aws",
+      "type": "bind"
+    }
+  ],
   "onCreateCommand": "/usr/local/share/aws-cli/onCreate.sh",
   "command": "aws",
   "scripts": {
