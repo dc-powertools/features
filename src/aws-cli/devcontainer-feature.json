@@ -24,6 +24,11 @@
       "default": "",
       "description": "AWS IAM role name for SSO (e.g., ReadOnly, PowerUserAccess).",
       "type": "string"
+    },
+    "region": {
+      "default": "",
+      "description": "Default AWS region for CLI commands (e.g., us-west-2). Defaults to ssoRegion if not set.",
+      "type": "string"
     }
   },
   "containerEnv": {

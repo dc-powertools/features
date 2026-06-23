@@ -6,6 +6,7 @@ SSOSTARTURL="${SSOSTARTURL:-}"
 SSOREGION="${SSOREGION:-}"
 SSOACCOUNTID="${SSOACCOUNTID:-}"
 SSOROLENAME="${SSOROLENAME:-}"
+REGION="${REGION:-}"
 
 # Install prerequisites
 apt-get update -y >/dev/null
@@ -46,12 +47,14 @@ if [ -n "$SSOSTARTURL" ] && [ -n "$SSOREGION" ]; then
         echo "sso_start_url = $SSOSTARTURL"
         echo "sso_region = $SSOREGION"
         echo "sso_registration_scopes = sso:account:access"
-        if [ -n "$SSOACCOUNTID" ] || [ -n "$SSOROLENAME" ]; then
+        PROFILE_REGION="${REGION:-$SSOREGION}"
+        if [ -n "$SSOACCOUNTID" ] || [ -n "$SSOROLENAME" ] || [ -n "$PROFILE_REGION" ]; then
             echo ""
             echo "[profile default]"
             echo "sso_session = default"
             [ -n "$SSOACCOUNTID" ] && echo "sso_account_id = $SSOACCOUNTID"
             [ -n "$SSOROLENAME" ] && echo "sso_role_name = $SSOROLENAME"
+            [ -n "$PROFILE_REGION" ] && echo "region = $PROFILE_REGION"
         fi
     } > /usr/local/share/aws-cli/config
 fi
