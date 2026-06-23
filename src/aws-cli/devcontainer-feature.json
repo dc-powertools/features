@@ -1,6 +1,6 @@
 {
   "id": "aws-cli",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "name": "AWS CLI",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/aws-cli",
   "description": "Installs the AWS CLI v2 with SSO configuration support.",
