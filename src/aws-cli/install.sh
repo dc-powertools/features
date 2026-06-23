@@ -4,6 +4,7 @@ set -e
 
 SSOSTARTURL="${SSOSTARTURL:-}"
 SSOREGION="${SSOREGION:-}"
+SSOACCOUNTID="${SSOACCOUNTID:-}"
 
 # Install prerequisites
 apt-get update -y >/dev/null
@@ -28,19 +29,29 @@ curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-${AWS_ARCH}.zip" -o "$
 
 echo "Installing..."
 unzip -q "$TMP_DIR/awscliv2.zip" -d "$TMP_DIR"
-"$TMP_DIR/aws/install"
+if [ -x /usr/local/bin/aws ]; then
+    "$TMP_DIR/aws/install" --update
+else
+    "$TMP_DIR/aws/install"
+fi
 
 aws --version
 
 # Seed SSO config if both options are provided
 mkdir -p /usr/local/share/aws-cli
 if [ -n "$SSOSTARTURL" ] && [ -n "$SSOREGION" ]; then
-    cat > /usr/local/share/aws-cli/config <<EOF
-[sso-session default]
-sso_start_url = $SSOSTARTURL
-sso_region = $SSOREGION
-sso_registration_scopes = sso:account:access
-EOF
+    {
+        echo "[sso-session default]"
+        echo "sso_start_url = $SSOSTARTURL"
+        echo "sso_region = $SSOREGION"
+        echo "sso_registration_scopes = sso:account:access"
+        if [ -n "$SSOACCOUNTID" ]; then
+            echo ""
+            echo "[profile default]"
+            echo "sso_session = default"
+            echo "sso_account_id = $SSOACCOUNTID"
+        fi
+    } > /usr/local/share/aws-cli/config
 fi
 
 cp "$(dirname "$0")/onCreate.sh" /usr/local/share/aws-cli/onCreate.sh

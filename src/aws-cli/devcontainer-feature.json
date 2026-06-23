@@ -14,6 +14,11 @@
       "default": "",
       "description": "AWS region for SSO (e.g., us-east-1).",
       "type": "string"
+    },
+    "ssoAccountId": {
+      "default": "",
+      "description": "AWS account ID for SSO (e.g., 123456789012).",
+      "type": "string"
     }
   },
   "containerEnv": {
@@ -22,7 +27,7 @@
   "onCreateCommand": "/usr/local/share/aws-cli/onCreate.sh",
   "command": "aws",
   "scripts": {
-    "sso:configure": "aws configure sso",
-    "sso:login": "aws sso login"
+    "sso-configure": "aws configure sso",
+    "sso-login": "aws sso login"
   }
 }
