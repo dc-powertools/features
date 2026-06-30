@@ -14,7 +14,7 @@ apt-get update -y >/dev/null
 apt-get -y install --no-install-recommends ca-certificates curl >/dev/null
 
 if [ "$GCC" = "true" ]; then
-    apt-get -y install --no-install-recommends gcc >/dev/null
+    apt-get -y install --no-install-recommends gcc libc6-dev >/dev/null
 fi
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
