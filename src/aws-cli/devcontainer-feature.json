@@ -38,6 +38,9 @@
       "type": "bind"
     }
   ],
+  "containerEnv": {
+    "PAGER": ""
+  },
   "onCreateCommand": "/usr/local/share/aws-cli/onCreate.sh",
   "command": "aws",
   "scripts": {
