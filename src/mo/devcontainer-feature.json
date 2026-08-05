@@ -10,6 +10,6 @@
   "onCreateCommand": "/usr/local/share/mo/onCreate.sh",
   "scripts": {
     "mo": "mo --resume",
-    "yolo": "mo --profile yolo --resume"
+    "yolo": "mo --dangerously-skip-permissions --resume"
   }
 }
