@@ -1,0 +1,7 @@
+{
+  "name": "dcp-features-mo",
+  "image": "debian",
+  "features": {
+    "../src/mo": {}
+  }
+}
