@@ -1,0 +1,11 @@
+{
+  "dccVersion": "0.0.33",
+  "features": [
+    {
+      "direct": true,
+      "options": {},
+      "ref": "../src/mo",
+      "resolved": "sha256:b2a560d4ac87df571c663cbef6bcfb04e6c1af87242c1c6c244b0f8985fd57d8"
+    }
+  ]
+}
