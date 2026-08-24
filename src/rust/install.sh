@@ -2,13 +2,22 @@
 
 set -e
 
-export RUSTUP_HOME=/usr/local/rustup
-export CARGO_HOME=/usr/local/cargo
-
 VERSION="${VERSION:-stable}"
 FMT="${FMT:-true}"
 CLIPPY="${CLIPPY:-true}"
 GCC="${GCC:-true}"
+
+REMOTE_HOME="${_REMOTE_USER_HOME:-}"
+if [ -z "$REMOTE_HOME" ]; then
+    REMOTE_HOME="$(getent passwd "$_REMOTE_USER" | cut -d: -f6)"
+fi
+if [ -z "$REMOTE_HOME" ]; then
+    echo "Could not determine home directory for $_REMOTE_USER." >&2
+    exit 1
+fi
+
+export RUSTUP_HOME="$REMOTE_HOME/.rustup"
+export CARGO_HOME="$REMOTE_HOME/.cargo"
 
 apt-get update -y >/dev/null
 apt-get -y install --no-install-recommends ca-certificates curl >/dev/null
@@ -30,9 +39,6 @@ if [ "$CLIPPY" = "true" ]; then
     rustup component add clippy
 fi
 
-mkdir -p /usr/local/share/rust
-cp "$(dirname "$0")/onCreate.sh" /usr/local/share/rust/onCreate.sh
-
 cat > /etc/profile.d/rust.sh <<'EOF'
 case ":${PATH}:" in
     *":${CARGO_HOME}/bin:"*) ;;
@@ -40,7 +46,8 @@ case ":${PATH}:" in
 esac
 EOF
 
-chown -R "$_REMOTE_USER:$_REMOTE_USER" "$RUSTUP_HOME" "$CARGO_HOME"
+REMOTE_GROUP="$(id -gn "$_REMOTE_USER")"
+chown -R "$_REMOTE_USER:$REMOTE_GROUP" "$RUSTUP_HOME" "$CARGO_HOME"
 
 rustc --version
 cargo --version

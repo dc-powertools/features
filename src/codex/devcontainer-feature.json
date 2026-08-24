@@ -14,12 +14,18 @@
       "type": "string"
     }
   },
-  "containerEnv": {
-    "CODEX_HOME": "${containerCacheFolder}/.codex"
+  "remoteEnv": {
+    "CODEX_HOME": "${containerEnv:HOME}/.codex"
   },
-  "onCreateCommand": "/usr/local/share/codex/onCreate.sh",
-  "scripts": {
-    "codex": "codex resume",
-    "yolo": "codex resume --yolo"
+  "customizations": {
+    "dcc": {
+      "commands": {
+        "codex": "codex resume",
+        "yolo": "codex resume --yolo"
+      },
+      "state": [
+        "${containerEnv:HOME}/.codex"
+      ]
+    }
   }
 }

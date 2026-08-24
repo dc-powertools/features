@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "name": "Node.js",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/node",
-  "description": "Installs Node.js system-wide and overlays a cached bind mount on node_modules to preserve packages across dcc run invocations.",
+  "description": "Installs Node.js system-wide and declares node_modules as dcc state to preserve packages across runs.",
   "options": {
     "version": {
       "default": "latest",
@@ -17,11 +17,11 @@
       "type": "string"
     }
   },
-  "mounts": [
-    {
-      "source": "${localCacheFolder}/node_modules",
-      "target": "${containerWorkspaceFolder}/node_modules",
-      "type": "bind"
+  "customizations": {
+    "dcc": {
+      "state": [
+        "${containerWorkspaceFolder}/node_modules"
+      ]
     }
-  ]
+  }
 }

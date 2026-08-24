@@ -12,5 +12,5 @@
       "type": "bind"
     }
   ],
-  "onCreateCommand": "/usr/local/share/git/onCreate.sh"
+  "postStartCommand": "/usr/local/share/git/postStart.sh"
 }

@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "name": "Playwright System Dependencies",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/playwright",
-  "description": "Installs system libraries required by Playwright browsers and caches browser binaries across dcc run invocations.",
+  "description": "Installs system libraries required by Playwright browsers and depends on the node feature for node_modules state.",
   "options": {
     "browsers": {
       "default": "chromium",
@@ -16,6 +16,9 @@
       ],
       "type": "string"
     }
+  },
+  "dependsOn": {
+    "ghcr.io/dc-powertools/features/node:0": {}
   },
   "containerEnv": {
     "PLAYWRIGHT_BROWSERS_PATH": "0"

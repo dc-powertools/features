@@ -31,20 +31,19 @@
       "type": "string"
     }
   },
-  "mounts": [
-    {
-      "source": "${localCacheFolder}/.aws",
-      "target": "${containerEnv:HOME}/.aws",
-      "type": "bind"
-    }
-  ],
   "containerEnv": {
     "PAGER": ""
   },
-  "onCreateCommand": "/usr/local/share/aws-cli/onCreate.sh",
-  "command": "aws",
-  "scripts": {
-    "sso-configure": "aws configure sso --use-device-code --profile default",
-    "sso-login": "aws sso login --use-device-code --profile default"
+  "postStartCommand": "/usr/local/share/aws-cli/postStart.sh",
+  "customizations": {
+    "dcc": {
+      "commands": {
+        "sso-configure": "aws configure sso --use-device-code --profile default",
+        "sso-login": "aws sso login --use-device-code --profile default"
+      },
+      "state": [
+        "${containerEnv:HOME}/.aws"
+      ]
+    }
   }
 }

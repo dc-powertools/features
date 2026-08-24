@@ -4,12 +4,18 @@
   "name": "Mo",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/mo",
   "description": "Installs the mo coding harness and configures it to store state in the `dcc` session cache.",
-  "containerEnv": {
-    "MO_HOME": "${containerCacheFolder}/.mo"
+  "remoteEnv": {
+    "MO_HOME": "${containerEnv:HOME}/.mo"
   },
-  "onCreateCommand": "/usr/local/share/mo/onCreate.sh",
-  "scripts": {
-    "mo": "mo --resume",
-    "yolo": "mo --dangerously-skip-permissions --resume"
+  "customizations": {
+    "dcc": {
+      "commands": {
+        "mo": "mo --resume",
+        "yolo": "mo --dangerously-skip-permissions --resume"
+      },
+      "state": [
+        "${containerEnv:HOME}/.mo"
+      ]
+    }
   }
 }

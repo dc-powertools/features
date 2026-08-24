@@ -8,7 +8,10 @@ if [ -z "$REMOTE_USER" ]; then
     exit 1
 fi
 
-REMOTE_HOME="$(getent passwd "$REMOTE_USER" | cut -d: -f6)"
+REMOTE_HOME="${_REMOTE_USER_HOME:-}"
+if [ -z "$REMOTE_HOME" ]; then
+    REMOTE_HOME="$(getent passwd "$REMOTE_USER" | cut -d: -f6)"
+fi
 if [ -z "$REMOTE_HOME" ]; then
     echo "Could not determine home directory for $REMOTE_USER." >&2
     exit 1
@@ -55,9 +58,6 @@ su "$REMOTE_USER" -s /usr/bin/bash -c \
 
 BREW_PREFIX="$("$BREW_BIN" --prefix)"
 ln -sf "$BREW_PREFIX/bin/mo" /usr/local/bin/mo
-
-mkdir -p /usr/local/share/mo/
-cp "$(dirname "$0")/onCreate.sh" /usr/local/share/mo/onCreate.sh
 
 apt-get clean >/dev/null
 rm -rf /var/lib/apt/lists/* >/dev/null

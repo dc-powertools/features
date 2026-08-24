@@ -14,11 +14,18 @@
       "type": "string"
     }
   },
-  "containerEnv": {
-    "CLAUDE_CONFIG_DIR": "${containerCacheFolder}/.claude"
+  "remoteEnv": {
+    "CLAUDE_CONFIG_DIR": "${containerEnv:HOME}/.claude"
   },
-  "scripts": {
-    "claude": "claude --continue",
-    "yolo": "claude --continue --dangerously-skip-permissions"
+  "customizations": {
+    "dcc": {
+      "commands": {
+        "claude": "claude --continue",
+        "yolo": "claude --continue --dangerously-skip-permissions"
+      },
+      "state": [
+        "${containerEnv:HOME}/.claude"
+      ]
+    }
   }
 }

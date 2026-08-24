@@ -30,19 +30,18 @@
       "type": "boolean"
     }
   },
-  "containerEnv": {
-    "RUSTUP_HOME": "${containerCacheFolder}/.rustup",
-    "CARGO_HOME": "${containerCacheFolder}/.cargo"
-  },
   "remoteEnv": {
-    "PATH": "${containerEnv:CARGO_HOME}/bin:${containerEnv:PATH}"
+    "RUSTUP_HOME": "${containerEnv:HOME}/.rustup",
+    "CARGO_HOME": "${containerEnv:HOME}/.cargo",
+    "PATH": "${containerEnv:HOME}/.cargo/bin:${containerEnv:PATH}"
   },
-  "onCreateCommand": "/usr/local/share/rust/onCreate.sh",
-  "mounts": [
-    {
-      "source": "${localCacheFolder}/target",
-      "target": "${containerWorkspaceFolder}/target",
-      "type": "bind"
+  "customizations": {
+    "dcc": {
+      "state": [
+        "${containerEnv:HOME}/.rustup",
+        "${containerEnv:HOME}/.cargo",
+        "${containerWorkspaceFolder}/target"
+      ]
     }
-  ]
+  }
 }
