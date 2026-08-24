@@ -1,6 +1,6 @@
 {
   "id": "playwright",
-  "version": "0.0.3",
+    "version": "0.1.0",
   "name": "Playwright System Dependencies",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/playwright",
   "description": "Installs system libraries required by Playwright browsers and depends on the node feature for node_modules state.",

@@ -1,6 +1,6 @@
 {
   "id": "codex",
-  "version": "0.0.4",
+    "version": "0.1.0",
   "name": "OpenAI Codex",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/codex",
   "description": "Installs OpenAI Codex CLI and configures it to store state in the `dcc` session cache.",

@@ -1,6 +1,6 @@
 {
   "id": "mo",
-  "version": "0.0.3",
+    "version": "0.1.0",
   "name": "Mo",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/mo",
   "description": "Installs the mo coding harness and configures it to store state in the `dcc` session cache.",
