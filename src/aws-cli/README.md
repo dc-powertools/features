@@ -1,7 +1,7 @@
 # AWS CLI Feature
 
-This feature installs AWS CLI v2 and caches the full `$HOME/.aws` directory by
-mounting `${localCacheFolder}/.aws` at `${containerEnv:HOME}/.aws`.
+This feature installs AWS CLI v2 and persists the full `$HOME/.aws` directory
+through `customizations.dcc.state` at `${containerEnv:HOME}/.aws`.
 
 The feature assumes AWS CLI path-related environment variables are left at their
 default behavior, so AWS config, credentials, SSO cache, CLI history, and related
