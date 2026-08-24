@@ -1,6 +1,6 @@
 {
     "id": "sudo",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "name": "sudo",
     "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/sudo",
     "description": "Installs sudo and grants the remote user passwordless sudo access."

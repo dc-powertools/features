@@ -17,10 +17,10 @@ ghcr.io/dc-powertools/features/<feature>:<version>
 ```
 src/
   <feature>/
-    devcontainer-feature.json   # metadata, options, env, mounts
+    devcontainer-feature.json   # metadata, options, env, mounts, dcc customizations
     install.sh                  # entrypoint, runs as root at build time
     [bootstrap.sh]              # optional: delegated installer (runs as remote user)
-    [onCreate.sh]               # optional: runs inside container after creation
+    [postStart.sh]              # optional: runs when a dcc profile container starts
 
 test/
   dev-container-features-test-lib   # bundled test library (check / reportResults)
@@ -52,16 +52,21 @@ The manifest consumed by dcc and the devcontainers spec. Key fields:
 | `id` | Short identifier; must match the directory name |
 | `version` | Semver string; increment on every published change |
 | `options` | Named parameters users can pass; injected as uppercase env vars into `install.sh` (e.g. `version` → `VERSION`) |
-| `containerEnv` | Environment variables set inside the container at runtime |
+| `containerEnv` | Environment variables baked into the image before `install.sh` runs |
+| `remoteEnv` | Environment variables set at runtime; use for values derived from `${containerEnv:HOME}` |
 | `mounts` | Additional bind mounts or volumes added to the container |
-| `command` | Binary that dcc verifies exists after installation |
-| `onCreateCommand` | Script run inside the container after it is first created |
+| `customizations.dcc.commands` | Named commands exposed through `dcc run <feature>:<name>` |
+| `customizations.dcc.state` | Container paths persisted under the profile cache and seeded from the image |
+| `onCreateCommand`, `updateContentCommand`, `postCreateCommand` | Build-preparation hooks run during `dcc build` |
+| `postStartCommand` | Runtime startup hook run when a profile container starts |
 
 ### `install.sh`
 
 Runs as **root** inside the container during the build step. The devcontainer runtime injects two additional variables beyond the feature's own options:
 
-- `$_REMOTE_USER` — the non-root user that will use the container (e.g. `dev`)
+- `$_REMOTE_USER` — the container user that will use the container (e.g. `dev`)
+- `$_REMOTE_USER_HOME` — that user's home directory
+- `$_CONTAINER_USER` / `$_CONTAINER_USER_HOME` — aliases supplied for compatibility with current dcc
 - `$VERSION` — the value of the `version` option (if the feature declares one)
 
 Install scripts follow a consistent pattern:
@@ -73,11 +78,11 @@ Install scripts follow a consistent pattern:
 
 ### `bootstrap.sh`
 
-Used by `claude` and `codex` because those installers must run as the remote user (they install into `~/.local/bin`). `install.sh` delegates to `bootstrap.sh` via `su "$_REMOTE_USER" -c "..."`, then creates a system-wide symlink as root.
+Used by `claude` and `codex` because those installers must run as the remote user (they install into `~/.local/bin`). `install.sh` delegates to `bootstrap.sh` via `su "$_REMOTE_USER" -c "HOME='$_REMOTE_USER_HOME' ..."`, then creates a system-wide symlink as root.
 
-### `onCreate.sh`
+### `postStart.sh`
 
-Used by `codex` to create `$CODEX_HOME` the first time the container starts. Registered via `onCreateCommand` in the manifest so dcc runs it after creation but before first use.
+Used for runtime synchronization that needs profile mounts or host files. `git` copies the mounted host git config, and `aws-cli` seeds the persisted AWS config directory. These hooks are registered as `postStartCommand` because current dcc runs `onCreateCommand` during build preparation.
 
 ---
 
@@ -91,26 +96,38 @@ dcc extends the standard devcontainer variable set with cache-aware variables:
 | `${localCacheFolder}` | `.dcc/<profile>/` on the host | Host-side source for the above; dcc auto-creates subdirectories used in mounts |
 | `${containerWorkspaceFolder}` | Workspace path inside the container | Standard devcontainer variable |
 
-### Cache usage patterns
+### State and cache usage patterns
 
-**Environment variable** (claude, codex): point a tool's state directory at the cache folder so it survives container rebuilds.
+The preferred way to preserve tool state is `customizations.dcc.state`. State
+paths are container paths, can use `${containerEnv:HOME}` for arbitrary
+`containerUser` support, and are seeded from the built image before build-prep
+hooks run.
 
 ```json
-"containerEnv": {
-    "CLAUDE_CONFIG_DIR": "${containerCacheFolder}/.claude"
+"remoteEnv": {
+    "CLAUDE_CONFIG_DIR": "${containerEnv:HOME}/.claude"
+},
+"customizations": {
+    "dcc": {
+        "state": [
+            "${containerEnv:HOME}/.claude"
+        ]
+    }
 }
 ```
 
-**Bind mount** (node): overlay a cache-backed directory on top of the workspace, so `node_modules` installed by `npm install` persists across runs without being committed to the repository.
+Explicit bind mounts are still useful for host files or non-state mount shapes.
+Mount sources under `${localCacheFolder}` are created automatically. For normal
+workspace artifacts, prefer state:
 
 ```json
-"mounts": [
-    {
-        "source": "${localCacheFolder}/node_modules",
-        "target": "${containerWorkspaceFolder}/node_modules",
-        "type": "bind"
+"customizations": {
+    "dcc": {
+        "state": [
+            "${containerWorkspaceFolder}/node_modules"
+        ]
     }
-]
+}
 ```
 
 ---
@@ -119,13 +136,13 @@ dcc extends the standard devcontainer variable set with cache-aware variables:
 
 | Feature | What it installs | Cache strategy |
 |---|---|---|
-| `aws-cli` | AWS CLI v2 | `AWS_CONFIG_FILE` → `${containerCacheFolder}/.aws/config` |
-| `claude` | Claude Code CLI | `CLAUDE_CONFIG_DIR` → `${containerCacheFolder}/.claude` |
-| `codex` | OpenAI Codex CLI | `CODEX_HOME` → `${containerCacheFolder}/.codex` |
+| `aws-cli` | AWS CLI v2 | state: `${containerEnv:HOME}/.aws`; seeded in `postStartCommand` |
+| `claude` | Claude Code CLI | state: `${containerEnv:HOME}/.claude`; `CLAUDE_CONFIG_DIR` in `remoteEnv` |
+| `codex` | OpenAI Codex CLI | state: `${containerEnv:HOME}/.codex`; `CODEX_HOME` in `remoteEnv` |
 | `linux-package` | A system package via apt/dnf/yum | none |
-| `mo` | mo coding harness | `MO_HOME` → `${containerCacheFolder}/.mo` |
-| `node` | Node.js (system-wide) | bind mount `node_modules` from `${localCacheFolder}/node_modules` |
-| `playwright` | Playwright browser system dependencies | hermetic install into `node_modules` (cached by `node` feature) |
+| `mo` | mo coding harness | state: `${containerEnv:HOME}/.mo`; `MO_HOME` in `remoteEnv` |
+| `node` | Node.js (system-wide) | state: `${containerWorkspaceFolder}/node_modules` |
+| `playwright` | Playwright browser system dependencies | depends on `node`; browser packages live in Node-managed `node_modules` |
 | `sudo` | sudo + passwordless grant for `$_REMOTE_USER` | none |
 
 ---

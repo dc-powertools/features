@@ -12,7 +12,7 @@ Similar to the [`devcontainers/features`](https://github.com/devcontainers/featu
 ...
 ```
 
-[dcc](https://github.com/dc-powertools/dcc) will composite [the documented dev container properties](https://containers.dev/implementors/features/#devcontainer-feature-json-properties) from the feature's `devcontainer-feature.json` file, and execute in the `install.sh` entrypoint script in the container during build time.  Implementing tools are also free to process attributes under the `customizations` property as desired.
+[dcc](https://github.com/dc-powertools/dcc) will composite [the documented dev container properties](https://containers.dev/implementors/features/#devcontainer-feature-json-properties) from the feature's `devcontainer-feature.json` file, execute the `install.sh` entrypoint during `dcc build`, and store feature runtime metadata in the image's `devcontainer.metadata` label. dcc-specific runtime behavior lives under `customizations.dcc`, including named commands and declared state.
 
 ## Distributing Features
 

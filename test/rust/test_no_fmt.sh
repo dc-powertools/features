@@ -2,9 +2,9 @@
 
 set -e
 
-export RUSTUP_HOME=/usr/local/rustup
-export CARGO_HOME=/usr/local/cargo
-export PATH="/usr/local/cargo/bin:$PATH"
+export RUSTUP_HOME="${RUSTUP_HOME:-$HOME/.rustup}"
+export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+export PATH="$CARGO_HOME/bin:$PATH"
 
 _LIB="$(cd "$(dirname "$0")/.." && pwd)/dev-container-features-test-lib"
 if [ -f "$_LIB" ]; then

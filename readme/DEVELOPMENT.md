@@ -12,7 +12,7 @@
 
 1. Create `src/<feature>/devcontainer-feature.json` with at minimum `id`, `version`, `name`, and `description`. See [ARCHITECTURE.md](ARCHITECTURE.md) for field reference.
 2. Create `src/<feature>/install.sh`. Mark it executable (`chmod +x`). Follow the existing pattern: install deps, download and verify the tool, expose it on PATH, clean up apt lists.
-3. Create `.devcontainer/<feature>.json` pointing at `../src/<feature>` so the feature can be run locally with `dcc run <feature>`.
+3. Create `.devcontainer/<feature>.json` pointing at `../src/<feature>` so the feature can be built locally with `dcc build -p <feature>` and exercised with `dcc exec -p <feature> ...`.
 4. Create `test/<feature>/scenarios.json`, `test/<feature>/test.sh`, and `test/<feature>/test_debian.sh`. Add a `test_specific_version.sh` if the feature accepts a `version` option.
 5. Add the feature's test jobs to `.github/workflows/test.yaml`.
 
@@ -23,7 +23,7 @@
 ### Inside a dcc container (feature pre-installed)
 
 ```bash
-dcc run <feature> -- bash test/<feature>/test.sh
+dcc exec -p <feature> bash test/<feature>/test.sh
 ```
 
 The workspace is mounted inside the container. The test script finds `test/dev-container-features-test-lib` via its relative-path source line, so no extra setup is required.
@@ -44,7 +44,7 @@ VERSION=22.14.0 test/run.sh <feature> test/<feature>/test_specific_version.sh
 
 ## Linting
 
-All shell scripts (`install.sh`, `bootstrap.sh`, `onCreate.sh`, `test/run.sh`, test scripts) must pass `shellcheck` before committing.
+All shell scripts (`install.sh`, `bootstrap.sh`, lifecycle hook scripts, `test/run.sh`, test scripts) must pass `shellcheck` before committing.
 
 ```bash
 # Lint a single file
@@ -61,6 +61,10 @@ Common issues to watch for:
 - `set -e` at the top of every script
 - `ln -sf` not `ln -s` (idempotent symlinks)
 - No hardcoded paths where `$_REMOTE_USER` or a variable should be used
+- Use `_REMOTE_USER_HOME` instead of assuming `/home/$_REMOTE_USER`
+- Use `customizations.dcc.commands` for dcc named commands
+- Use `customizations.dcc.state` plus `${containerEnv:HOME}` for persisted per-user state
+- Use `postStartCommand` for runtime work that needs host mounts or profile state
 
 ---
 

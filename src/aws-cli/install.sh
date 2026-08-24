@@ -58,7 +58,8 @@ if [ -n "$SSOSTARTURL" ] && [ -n "$SSOREGION" ]; then
     } > /usr/local/share/aws-cli/config
 fi
 
-cp "$(dirname "$0")/onCreate.sh" /usr/local/share/aws-cli/onCreate.sh
+cp "$(dirname "$0")/postStart.sh" /usr/local/share/aws-cli/postStart.sh
+chmod 0755 /usr/local/share/aws-cli/postStart.sh
 
 # Clean up apt lists
 apt-get clean >/dev/null

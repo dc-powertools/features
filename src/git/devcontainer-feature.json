@@ -1,6 +1,6 @@
 {
   "id": "git",
-  "version": "0.0.2",
+    "version": "0.1.0",
   "name": "Git",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/git",
   "description": "Installs git and copies the host user's global gitconfig into the container at startup.",
@@ -12,5 +12,5 @@
       "type": "bind"
     }
   ],
-  "onCreateCommand": "/usr/local/share/git/onCreate.sh"
+  "postStartCommand": "/usr/local/share/git/postStart.sh"
 }

@@ -10,7 +10,7 @@ jobs:
     outputs:
       features: ${{ steps.list.outputs.features }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - id: list
         run: |
           features=$(find test -maxdepth 2 -name 'scenarios.json' \
@@ -27,6 +27,6 @@ jobs:
       matrix:
         feature: ${{ fromJSON(needs.discover.outputs.features) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - name: Test ${{ matrix.feature }}
         run: test/run-scenarios.sh ${{ matrix.feature }}
