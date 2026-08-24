@@ -19,6 +19,12 @@ fi
 export RUSTUP_HOME="$REMOTE_HOME/.rustup"
 export CARGO_HOME="$REMOTE_HOME/.cargo"
 
+INSTALLER_HOME="$(getent passwd "$(id -un)" | cut -d: -f6)"
+if [ -z "$INSTALLER_HOME" ]; then
+    INSTALLER_HOME="$HOME"
+fi
+export HOME="$INSTALLER_HOME"
+
 apt-get update -y >/dev/null
 apt-get -y install --no-install-recommends ca-certificates curl >/dev/null
 
