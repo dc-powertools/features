@@ -18,16 +18,27 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 # Put test/ on PATH so `source dev-container-features-test-lib` finds the bundled lib
 export PATH="$SCRIPT_DIR:$PATH"
 
-VERSION="${VERSION:-latest}"
+VERSION="${VERSION:-}"
 _REMOTE_USER="${_REMOTE_USER:-$(id -un)}"
+_REMOTE_USER_HOME="${_REMOTE_USER_HOME:-$(getent passwd "$_REMOTE_USER" | cut -d: -f6)}"
+_CONTAINER_USER="${_CONTAINER_USER:-$_REMOTE_USER}"
+_CONTAINER_USER_HOME="${_CONTAINER_USER_HOME:-$_REMOTE_USER_HOME}"
 
-echo "=== Installing feature: $FEATURE (version: $VERSION) ==="
+echo "=== Installing feature: $FEATURE (version: ${VERSION:-default}) ==="
 
 if [ "$(id -u)" = "0" ]; then
-    VERSION="$VERSION" _REMOTE_USER="$_REMOTE_USER" \
+    VERSION="$VERSION" \
+        _REMOTE_USER="$_REMOTE_USER" \
+        _REMOTE_USER_HOME="$_REMOTE_USER_HOME" \
+        _CONTAINER_USER="$_CONTAINER_USER" \
+        _CONTAINER_USER_HOME="$_CONTAINER_USER_HOME" \
         bash "$REPO_ROOT/src/$FEATURE/install.sh"
 elif command -v sudo >/dev/null 2>&1; then
-    sudo -E VERSION="$VERSION" _REMOTE_USER="$_REMOTE_USER" \
+    sudo -E VERSION="$VERSION" \
+        _REMOTE_USER="$_REMOTE_USER" \
+        _REMOTE_USER_HOME="$_REMOTE_USER_HOME" \
+        _CONTAINER_USER="$_CONTAINER_USER" \
+        _CONTAINER_USER_HOME="$_CONTAINER_USER_HOME" \
         bash "$REPO_ROOT/src/$FEATURE/install.sh"
 else
     echo "WARNING: not root and no sudo — skipping install (assuming feature is pre-installed)" >&2
