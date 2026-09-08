@@ -1,9 +1,16 @@
 {
   "id": "git",
-    "version": "0.1.0",
+  "version": "0.2.0",
   "name": "Git",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/git",
-  "description": "Installs git and copies the host user's global gitconfig into the container at startup.",
+  "description": "Installs git, copies the host user's global gitconfig, and trusts the container workspace.",
+  "options": {
+    "trustWorkspaceRecursively": {
+      "default": false,
+      "description": "Trust every Git repository below the workspace folder in addition to the repository at its root.",
+      "type": "boolean"
+    }
+  },
   "mounts": [
     {
       "source": "${localEnv:HOME}/.gitconfig",
@@ -12,5 +19,8 @@
       "type": "bind"
     }
   ],
-  "postStartCommand": "/usr/local/share/git/postStart.sh"
+  "postStartCommand": [
+    "/usr/local/share/git/postStart.sh",
+    "${containerWorkspaceFolder}"
+  ]
 }

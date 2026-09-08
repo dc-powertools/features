@@ -4,5 +4,13 @@
         "features": {
             "git": {}
         }
+    },
+    "test_recursive": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "git": {
+                "trustWorkspaceRecursively": true
+            }
+        }
     }
 }
