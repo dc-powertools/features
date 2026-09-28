@@ -23,14 +23,32 @@ jobs:
         id: filter
         run: bash .github/scripts/filter-unpublished.sh
 
+      - name: Install latest dcc
+        if: steps.filter.outputs.needs_publish != '0'
+        run: bash .github/scripts/install-dcc.sh
+
+      - name: Validate changed feature metadata
+        if: steps.filter.outputs.needs_publish != '0'
+        run: dcc feature validate .publish-staging
+
+      - name: Set up Node.js 24
+        if: steps.filter.outputs.needs_publish != '0'
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Install Dev Container CLI
+        if: steps.filter.outputs.needs_publish != '0'
+        run: npm install --global @devcontainers/cli@0.89.0
+
       - name: Publish changed features
         if: steps.filter.outputs.needs_publish != '0'
-        uses: devcontainers/action@v1
-        with:
-          publish-features: "true"
-          base-path-to-features: ".publish-staging"
-          generate-docs: "false"
-          disable-schema-validation: "true"
+        run: |
+          devcontainer features publish \
+            --registry ghcr.io \
+            --namespace dc-powertools/features \
+            .publish-staging
         env:
           GITHUB_TOKEN: ${{ github.token }}
 

@@ -12,12 +12,7 @@
     }
   },
   "mounts": [
-    {
-      "source": "${localEnv:HOME}/.gitconfig",
-      "target": "/run/host-gitconfig",
-      "readonly": true,
-      "type": "bind"
-    }
+    "type=bind,source=${localEnv:HOME}/.gitconfig,target=/run/host-gitconfig,readonly"
   ],
   "postStartCommand": [
     "/usr/local/share/git/postStart.sh",

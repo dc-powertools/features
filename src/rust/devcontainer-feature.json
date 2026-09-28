@@ -15,17 +15,17 @@
       "type": "string"
     },
     "fmt": {
-      "default": "true",
+      "default": true,
       "description": "Install rustfmt.",
       "type": "boolean"
     },
     "clippy": {
-      "default": "true",
+      "default": true,
       "description": "Install clippy.",
       "type": "boolean"
     },
     "gcc": {
-      "default": "true",
+      "default": true,
       "description": "Install gcc (required by crates that compile C code).",
       "type": "boolean"
     }

@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- [dcc](https://github.com/dc-powertools/dcc) — to build and run features locally
+- [dcc](https://github.com/dc-powertools/dcc) 0.1.9 or newer — to validate metadata and build and run features locally
 - `shellcheck` — shell script linter (`apt install shellcheck` / `brew install shellcheck`)
 - `bash` 4+ and standard POSIX utilities (`awk`, `grep`, `sha256sum`, `tar`)
 
@@ -19,6 +19,17 @@
 ---
 
 ## Running Tests
+
+### Feature metadata
+
+```bash
+dcc feature validate src
+```
+
+CI validates all feature metadata before running feature scenarios, using the
+latest stable dcc release. Release builds also validate the staged features before
+publishing. dcc accepts string mounts, including `,readonly`; use that form for
+read-only mounts instead of an object-level `readonly` field.
 
 ### Inside a dcc container (feature pre-installed)
 

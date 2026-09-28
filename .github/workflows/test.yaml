@@ -11,6 +11,10 @@ jobs:
       features: ${{ steps.list.outputs.features }}
     steps:
       - uses: actions/checkout@v5
+      - name: Install latest dcc
+        run: bash .github/scripts/install-dcc.sh
+      - name: Validate feature metadata
+        run: dcc feature validate src
       - id: list
         run: |
           features=$(find test -maxdepth 2 -name 'scenarios.json' \

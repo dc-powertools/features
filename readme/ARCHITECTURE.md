@@ -36,7 +36,7 @@ test/
 
 .github/workflows/
   test.yaml                     # CI: runs on push/PR, installs features and runs tests
-  release.yaml                  # manual: publishes features to GHCR
+  release.yaml                  # publishes changed features after main succeeds or manually
 ```
 
 ---
@@ -177,6 +177,19 @@ Installs a feature and then runs a test script. Handles three privilege contexts
 
 ### CI Workflows
 
-**`test.yaml`** runs on every push and pull request to `main`. For each feature it runs `test/run.sh` with the default version and with any pinned-version scenarios. Uses `ubuntu-latest` runners — no Docker required.
+**`test.yaml`** runs on pull requests to `main` and is called by `main.yaml` for
+pushes. It first runs `dcc feature validate src`, then discovers and runs each
+feature's scenarios through `test/run-scenarios.sh`. Uses `ubuntu-latest` runners
+without Docker.
 
-**`release.yaml`** is triggered manually and only runs on `main`. Uses `devcontainers/action` to publish all features to GHCR.
+**`release.yaml`** runs after a successful `Features - Main` workflow or a manual
+trigger, checking out `main`. It stages versions without a matching
+`<feature>@<version>` tag, validates them with dcc, then publishes them to GHCR
+using `@devcontainers/cli` 0.89.0 on Node.js 24. It creates the repository tags after
+successful publication. Validation and publishing are skipped when staging is
+empty.
+
+Both workflows install the latest stable dcc release with
+`.github/scripts/install-dcc.sh`, verifying the archive against the SHA256 digest
+in GitHub's release metadata before extraction. The dcc version and its bundled
+validation schema therefore track the latest release.

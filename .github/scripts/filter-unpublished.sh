@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 # Copy features that have no published git tag for their current version into
-# .publish-staging/, so devcontainers/action only publishes what is new.
+# .publish-staging/, so the Dev Container CLI only publishes what is new.
 # Outputs: needs_publish=N to $GITHUB_OUTPUT (or /dev/null when run locally).
 set -e
 
