@@ -30,3 +30,5 @@ check "libdrm2 is installed" dpkg -s libdrm2
 check "gstreamer1.0-libav is not installed" sh -c '! dpkg -s gstreamer1.0-libav 2>/dev/null | grep -q "^Status:.*installed"'
 
 reportResults
+
+node --test "$(dirname "$0")/startup.test.cjs"

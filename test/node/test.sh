@@ -20,3 +20,5 @@ check "node_modules is declared as dcc state" grep -qF \
     "$REPO_ROOT/src/node/devcontainer-feature.json"
 
 reportResults
+
+node --test "$(dirname "$0")/startup.test.cjs"

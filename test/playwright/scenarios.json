@@ -5,6 +5,14 @@
             "playwright": {}
         }
     },
+    "test_specific_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "playwright": {
+                "version": "1.61.0"
+            }
+        }
+    },
     "test_all_browsers": {
         "image": "mcr.microsoft.com/devcontainers/base:debian",
         "features": {

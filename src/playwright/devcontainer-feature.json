@@ -1,10 +1,15 @@
 {
   "id": "playwright",
-    "version": "0.1.0",
+  "version": "0.2.0",
   "name": "Playwright System Dependencies",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/playwright",
-  "description": "Installs system libraries required by Playwright browsers and depends on the node feature for node_modules state.",
+  "description": "Installs Playwright system dependencies at build time and reconciles them with the workspace's installed Playwright version on startup.",
   "options": {
+    "version": {
+      "type": "string",
+      "default": "latest",
+      "description": "Playwright version used for build-time system dependencies. Startup uses the workspace's installed version when available."
+    },
     "browsers": {
       "default": "chromium",
       "description": "Which browser dependencies to install: 'chromium', 'firefox', 'webkit', or 'all'.",
@@ -18,8 +23,13 @@
     }
   },
   "dependsOn": {
-    "ghcr.io/dc-powertools/features/node:0": {}
+    "ghcr.io/dc-powertools/features/node:0": {},
+    "ghcr.io/dc-powertools/features/sudo:0": {}
   },
+  "postStartCommand": [
+    "/usr/local/share/playwright/postStart.sh",
+    "${containerWorkspaceFolder}"
+  ],
   "containerEnv": {
     "PLAYWRIGHT_BROWSERS_PATH": "0"
   }

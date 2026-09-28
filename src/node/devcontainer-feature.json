@@ -1,10 +1,15 @@
 {
   "id": "node",
-    "version": "0.1.0",
+  "version": "0.2.0",
   "name": "Node.js",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/node",
   "description": "Installs Node.js system-wide and declares node_modules as dcc state to preserve packages across runs.",
   "options": {
+    "installOnStart": {
+      "type": "boolean",
+      "default": true,
+      "description": "Run npm install in the workspace on each container start. Skips workspaces without package.json and projects using another package manager."
+    },
     "version": {
       "default": "latest",
       "description": "Select the Node.js version to install. Use 'latest', a major like '22', or full semver like '22.14.0'.",
@@ -17,6 +22,10 @@
       "type": "string"
     }
   },
+  "postStartCommand": [
+    "/usr/local/share/node/postStart.sh",
+    "${containerWorkspaceFolder}"
+  ],
   "customizations": {
     "dcc": {
       "state": [

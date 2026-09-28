@@ -27,3 +27,5 @@ check "libgbm1 is installed" dpkg -s libgbm1
 check "libdrm2 is installed" dpkg -s libdrm2
 
 reportResults
+
+node --test "$(dirname "$0")/startup.test.cjs"

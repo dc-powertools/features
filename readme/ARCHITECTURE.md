@@ -86,6 +86,12 @@ The `claude` and `codex` features download their live official installers to tem
 
 Used for runtime synchronization that needs profile mounts or host files. `git` copies the mounted host git config, and `aws-cli` seeds the persisted AWS config directory. These hooks are registered as `postStartCommand` because current dcc runs `onCreateCommand` during build preparation.
 
+The `node` feature runs `npm install --no-audit --no-fund` in the workspace on each start unless `installOnStart` is false. It skips workspaces without `package.json` and projects that declare another package manager or have only another manager's lockfile. Installation runs as the container user and failures stop startup. npm may run lifecycle scripts and update the lockfile.
+
+The `playwright` feature depends on `node` and `sudo`. dcc runs feature startup hooks sequentially in dependency order, so Node package installation completes before Playwright checks the workspace. During the image build, Playwright's upstream CLI installs system dependencies for the feature's `version` (default `latest`) and `browsers` options. At startup, it resolves the workspace's installed `@playwright/test`, `playwright`, or `playwright-core` CLI and uses that version instead. It skips this step if none is installed. These steps install OS libraries, not browser binaries.
+
+Successful Playwright dependency installation is recorded atomically as an exact version and browser selection in `/usr/local/share/playwright/deps-state`. Matching startups skip installation; failed installs leave the previous record intact. This file stays in the container filesystem and must not be included in dcc state: it must track the OS packages in the same image/container. Runtime installation uses passwordless sudo when necessary. After manually installing or updating project packages, run `playwright-install-deps` from the workspace (or pass the workspace path as its argument).
+
 ---
 
 ## dcc Variable System
@@ -143,8 +149,8 @@ workspace artifacts, prefer state:
 | `codex` | OpenAI Codex CLI | state: `${containerEnv:HOME}/.codex`; `CODEX_HOME` in `remoteEnv` |
 | `linux-package` | A system package via apt/dnf/yum | none |
 | `mo` | mo coding harness | state: `${containerEnv:HOME}/.mo`; `MO_HOME` in `remoteEnv` |
-| `node` | Node.js (system-wide) | state: `${containerWorkspaceFolder}/node_modules` |
-| `playwright` | Playwright browser system dependencies | depends on `node`; browser packages live in Node-managed `node_modules` |
+| `node` | Node.js (system-wide); npm install on startup by default | state: `${containerWorkspaceFolder}/node_modules` |
+| `playwright` | Playwright browser system dependencies at build time and startup | depends on `node` and `sudo`; dependency record stays in the container filesystem |
 | `sudo` | sudo + passwordless grant for `$_REMOTE_USER` | none |
 
 ---

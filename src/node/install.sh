@@ -2,6 +2,12 @@
 
 set -e
 
+INSTALLONSTART="${INSTALLONSTART:-true}"
+case "$INSTALLONSTART" in
+    true|false) ;;
+    *) echo "installOnStart must be true or false" >&2; exit 1 ;;
+esac
+
 # Install prerequisites
 apt-get update -y >/dev/null
 apt-get -y install --no-install-recommends ca-certificates curl xz-utils libatomic1 >/dev/null
@@ -72,10 +78,17 @@ if [ "$ACTUAL_SHA256" != "$EXPECTED_SHA256" ]; then
 fi
 
 echo "Installing to /usr/local/..."
+# Replacing Node versions must not leave dependencies from the previous npm.
+rm -rf /usr/local/lib/node_modules/npm
 tar -xJf "$TARBALL_PATH" -C /usr/local/ --strip-components=1
 
 node --version
 npm --version
+
+mkdir -p /usr/local/share/node
+install -m 0755 "$(dirname "$0")/postStart.sh" /usr/local/share/node/postStart.sh
+printf '%s\n' "$INSTALLONSTART" > /usr/local/share/node/install-on-start
+chmod 0644 /usr/local/share/node/install-on-start
 
 # Clean up apt lists
 apt-get clean >/dev/null
