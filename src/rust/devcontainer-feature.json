@@ -1,6 +1,6 @@
 {
   "id": "rust",
-    "version": "0.1.0",
+  "version": "0.1.1",
   "name": "Rust",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/rust",
   "description": "Installs the Rust toolchain via rustup, including rustfmt and clippy.",

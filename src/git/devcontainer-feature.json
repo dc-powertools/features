@@ -1,6 +1,6 @@
 {
   "id": "git",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "name": "Git",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/git",
   "description": "Installs git, copies the host user's global gitconfig, and trusts the container workspace.",
