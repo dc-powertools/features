@@ -19,7 +19,6 @@ src/
   <feature>/
     devcontainer-feature.json   # metadata, options, env, mounts, dcc customizations
     install.sh                  # entrypoint, runs as root at build time
-    [bootstrap.sh]              # optional: delegated installer (runs as remote user)
     [postStart.sh]              # optional: runs when a dcc profile container starts
 
 test/
@@ -76,9 +75,12 @@ Install scripts follow a consistent pattern:
 3. Expose the binary on PATH (symlink into `/usr/local/bin/` or extract tarball to `/usr/local/`)
 4. `apt-get clean` / remove apt lists
 
-### `bootstrap.sh`
+### Upstream installers
 
-Used by `claude` because its installer must run as the remote user (it installs into `~/.local/bin`). `install.sh` delegates to `bootstrap.sh` via `su "$_REMOTE_USER" -c "HOME='$_REMOTE_USER_HOME' ..."`, then creates a system-wide symlink as root. The `codex` feature instead downloads the live official installer from `https://chatgpt.com/codex/install.sh`, runs it as the remote user with `CODEX_RELEASE` set to the requested version, and creates the same system-wide symlink. It also installs `procps` when `ps` is missing so Codex can manage its background server.
+The `claude` and `codex` features download their live official installers to temporary files and run them as the remote user because they install into `~/.local/bin`. They then create system-wide symlinks as root.
+
+- `claude` fetches `https://claude.ai/install.sh` and runs it with Bash, passing the requested version as an argument.
+- `codex` fetches `https://chatgpt.com/codex/install.sh` and sets `CODEX_RELEASE` to the requested version. It also installs `procps` when `ps` is missing so Codex can manage its background server.
 
 ### `postStart.sh`
 

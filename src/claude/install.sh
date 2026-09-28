@@ -10,7 +10,6 @@ fi
 
 # See instructions at https://code.claude.com/docs/en/setup
 
-# https://downloads.claude.ai/claude-code-releases/bootstrap.sh
 REMOTE_HOME="${_REMOTE_USER_HOME:-}"
 if [ -z "$REMOTE_HOME" ]; then
     REMOTE_HOME="$(getent passwd "$_REMOTE_USER" | cut -d: -f6)"
@@ -20,7 +19,15 @@ if [ -z "$REMOTE_HOME" ]; then
     exit 1
 fi
 
-su "$_REMOTE_USER" -c "HOME='$REMOTE_HOME' '$(dirname "$0")/bootstrap.sh' '$VERSION'"
+INSTALLER="$(mktemp)"
+trap 'rm -f "$INSTALLER"' EXIT
+curl -fsSL https://claude.ai/install.sh -o "$INSTALLER"
+
+# Expand positional arguments in the remote user's shell.
+# shellcheck disable=SC2016
+su "$_REMOTE_USER" -s /bin/bash \
+    -c 'export HOME="$1"; exec bash -s -- "$2"' \
+    -- bash "$REMOTE_HOME" "${VERSION:-latest}" < "$INSTALLER"
 
 ln -sf "$REMOTE_HOME/.local/bin/claude" /usr/local/bin/claude
 
