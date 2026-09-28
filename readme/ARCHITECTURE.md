@@ -78,7 +78,7 @@ Install scripts follow a consistent pattern:
 
 ### `bootstrap.sh`
 
-Used by `claude` and `codex` because those installers must run as the remote user (they install into `~/.local/bin`). `install.sh` delegates to `bootstrap.sh` via `su "$_REMOTE_USER" -c "HOME='$_REMOTE_USER_HOME' ..."`, then creates a system-wide symlink as root.
+Used by `claude` because its installer must run as the remote user (it installs into `~/.local/bin`). `install.sh` delegates to `bootstrap.sh` via `su "$_REMOTE_USER" -c "HOME='$_REMOTE_USER_HOME' ..."`, then creates a system-wide symlink as root. The `codex` feature instead downloads the live official installer from `https://chatgpt.com/codex/install.sh`, runs it as the remote user with `CODEX_RELEASE` set to the requested version, and creates the same system-wide symlink. It also installs `procps` when `ps` is missing so Codex can manage its background server.
 
 ### `postStart.sh`
 
