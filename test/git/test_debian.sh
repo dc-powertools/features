@@ -31,7 +31,7 @@ _HOME="$(mktemp -d)"
 _WORKSPACE="$_HOME/project root"
 mkdir -p "$_WORKSPACE"
 git init -q "$_WORKSPACE"
-printf '[user]\n\tname = Test User\n\temail = test@example.com\n[safe]\n\tdirectory = /existing/repo\n' > "$_MOCK"
+printf '[user]\n\tname = Test User\n\temail = test@example.com\n[safe]\n\tdirectory = /existing/repo\n[worktree]\n\tuseRelativePaths = false\n' > "$_MOCK"
 HOME="$_HOME" HOST_GITCONFIG="$_MOCK" \
     bash /usr/local/share/git/postStart.sh "$_WORKSPACE"
 rm -f "$_MOCK"
@@ -40,6 +40,8 @@ check "git user.name is set from host gitconfig" \
     env HOME="$_HOME" sh -c 'git config --global user.name | grep -qF "Test User"'
 check "git user.email is set from host gitconfig" \
     env HOME="$_HOME" sh -c 'git config --global user.email | grep -qF "test@example.com"'
+check "git configures worktrees to use relative paths" env HOME="$_HOME" sh -c \
+    'test "$(git config --global --type=bool worktree.useRelativePaths)" = "true"'
 check "git trusts the workspace root" env HOME="$_HOME" sh -c \
     'git config --global --get-all safe.directory | grep -Fqx -- "$1"' sh "$_WORKSPACE"
 check "git accepts a differently owned workspace root" env HOME="$_HOME" \

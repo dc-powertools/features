@@ -9,6 +9,8 @@ if [ -s "$HOST_GITCONFIG" ]; then
     cp "$HOST_GITCONFIG" "$HOME/.gitconfig"
 fi
 
+git config --global worktree.useRelativePaths true
+
 add_safe_directory() {
     directory="$1"
     if ! git config --global --get-all safe.directory | grep -Fqx -- "$directory"; then
