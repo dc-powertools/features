@@ -53,8 +53,12 @@ su "$REMOTE_USER" -s /usr/bin/bash -c \
     "HOME='$REMOTE_HOME' HOMEBREW_NO_ANALYTICS=1 HOMEBREW_NO_ASK=1 HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_ENV_HINTS=1 '$BREW_BIN' tap momentohq/tap"
 su "$REMOTE_USER" -s /usr/bin/bash -c \
     "HOME='$REMOTE_HOME' HOMEBREW_NO_ANALYTICS=1 HOMEBREW_NO_ASK=1 HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_ENV_HINTS=1 '$BREW_BIN' trust --formula momentohq/tap/mo"
-su "$REMOTE_USER" -s /usr/bin/bash -c \
-    "HOME='$REMOTE_HOME' HOMEBREW_NO_ANALYTICS=1 HOMEBREW_NO_ASK=1 HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_ENV_HINTS=1 '$BREW_BIN' install momentohq/tap/mo"
+# Ubuntu bottle installation can fail after downloading; reuse that cache once.
+INSTALL_COMMAND="HOME='$REMOTE_HOME' HOMEBREW_NO_ANALYTICS=1 HOMEBREW_NO_ASK=1 HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_ENV_HINTS=1 '$BREW_BIN' install momentohq/tap/mo"
+if ! su "$REMOTE_USER" -s /usr/bin/bash -c "$INSTALL_COMMAND"; then
+    echo "Mo installation failed; retrying once with the existing Homebrew cache." >&2
+    su "$REMOTE_USER" -s /usr/bin/bash -c "$INSTALL_COMMAND"
+fi
 
 BREW_PREFIX="$("$BREW_BIN" --prefix)"
 ln -sf "$BREW_PREFIX/bin/mo" /usr/local/bin/mo
