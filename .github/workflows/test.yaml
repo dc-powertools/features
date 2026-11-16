@@ -11,6 +11,8 @@ jobs:
       features: ${{ steps.list.outputs.features }}
     steps:
       - uses: actions/checkout@v5
+      - name: Test scenario runner
+        run: bash test/runner.test.sh
       - name: Install latest dcc
         run: bash .github/scripts/install-dcc.sh
       - name: Validate feature metadata

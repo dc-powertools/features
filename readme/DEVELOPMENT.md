@@ -4,6 +4,7 @@
 
 - [dcc](https://github.com/dc-powertools/dcc) 0.1.9 or newer — to validate metadata and build and run features locally
 - `shellcheck` — shell script linter (`apt install shellcheck` / `brew install shellcheck`)
+- `jq` — parses Feature option names and scenario metadata
 - `bash` 4+ and standard POSIX utilities (`awk`, `grep`, `sha256sum`, `tar`)
 
 ---
@@ -49,7 +50,11 @@ test/run.sh <feature> test/<feature>/test_debian.sh
 VERSION=22.14.0 test/run.sh <feature> test/<feature>/test_specific_version.sh
 ```
 
-`test/run.sh` installs the feature using root or sudo (whichever is available), adds `test/` to `PATH`, then runs the test script.
+`test/run.sh` installs the feature using root or sudo (whichever is available), adds `test/` to `PATH`, then runs the test script. Supplied options declared in the Feature manifest are passed explicitly as uppercase environment variables through `sudo env`; the runner does not depend on `sudo -E` support.
+
+Run the offline option-forwarding regression with `bash test/runner.test.sh`. It
+covers root installs, sudo that discards inherited variables, and the scenario runner.
+CI runs it before Feature discovery.
 
 ---
 
