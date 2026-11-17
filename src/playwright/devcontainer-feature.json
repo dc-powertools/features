@@ -1,6 +1,6 @@
 {
   "id": "playwright",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "name": "Playwright System Dependencies",
   "documentationURL": "http://github.com/dc-powertools/features/tree/main/src/playwright",
   "description": "Installs Playwright system dependencies at build time and reconciles them with the workspace's installed Playwright version on startup.",
