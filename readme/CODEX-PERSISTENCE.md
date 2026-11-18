@@ -1,10 +1,10 @@
-# Unpublished Codex persistence pilot
+# Codex persistence layout
 
-`pilot/codex` is local T-0108 integration metadata. Reference that directory from
-the local Features checkout; do not publish it. The production `src/codex` Feature
-remains unchanged until the dcc completion gate, including macOS qualification.
-This pilot defaults to Codex 0.169.0. Its metadata deliberately uses the new
-`directory-with-exclusions` state type so older dcc versions reject it.
+The Codex Feature in `src/codex` uses image-controlled executable packages from
+Feature version 0.2.0 and requires dcc 0.4.0 or newer. It defaults to Codex `latest`.
+Its metadata uses the `directory-with-exclusions` state type so older dcc versions
+reject it. This promotes the former local T-0108 pilot; the remaining platform and
+updater qualification is deferred by the maintainer for this release.
 
 The persistent CODEX_HOME excludes only `packages` and `tmp`, linked to stable writable image directories under
 `/opt/dcc-local/codex`. The Feature installs both standalone and daemon packages
@@ -26,7 +26,7 @@ excluded. Its stale sockets are handled by upstream, rather than deleted by dcc.
 
 Keep runtime `app-server-daemon` persistent: settings save atomically through a
 sibling temporary file, and `loaded-threads.json` is recovery state. A file bind or
-settings symlink cannot safely split that directory. The pilot does not delete
+settings symlink cannot safely split that directory. The Feature does not delete
 process records, locks, logs or unknown files. Upstream validates process identity
 and recovers stale PID records under its locks. Provisioning the daemon in the
 image is necessary: stale logs plus a missing ephemeral daemon package otherwise
@@ -51,8 +51,8 @@ Primary implementation references (paths at the revision above):
 - [PID backend](https://github.com/openai/codex/blob/662a634e88fcc809d77da393d75572c3d814cb27/codex-rs/app-server-daemon/src/backend/pid.rs): serialized stale-record recovery.
 - [Plugin storage](https://github.com/openai/codex/blob/662a634e88fcc809d77da393d75572c3d814cb27/codex-rs/core-plugins/src/installed_marketplaces.rs): `.tmp/marketplaces` user installations.
 
-Run `bash test/codex/persistence-pilot.sh` inside the prepared pilot image, plus
-`bash test/codex/test_debian.sh`. Integration must use an isolated profile/cache,
+Run `bash test/codex/test_debian.sh` inside the prepared image; it includes
+`test/codex/persistence.sh` layout checks. Integration must use an isolated profile/cache,
 never existing user credentials or history.
 
 ## Coordinated Linux integration
@@ -64,5 +64,5 @@ The local-reference profile built image
 `sha256:5293f5feec835c314ddc711513646f46961d46fd76d06d9a099e922aa2e2afd3`.
 Layout checks (10/10), existing Debian checks (2/2), daemon operation, rebuild and
 replacement passed with retained preferences/history/marketplace caches and reset
-package/tmp markers. Supporting dcc must be released before any future production
-Feature publication. This local pilot is not a release or catalog migration.
+package/tmp markers. This is historical pilot evidence, not qualification of the promoted release.
+The compatible dcc 0.4.0 release is available; remaining qualification is deferred.

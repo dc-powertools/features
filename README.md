@@ -14,6 +14,10 @@ Similar to the [`devcontainers/features`](https://github.com/devcontainers/featu
 
 [dcc](https://github.com/dc-powertools/dcc) will composite [the documented dev container properties](https://containers.dev/implementors/features/#devcontainer-feature-json-properties) from the feature's `devcontainer-feature.json` file, execute the `install.sh` entrypoint during `dcc build`, and store feature runtime metadata in the image's `devcontainer.metadata` label. dcc-specific runtime behavior lives under `customizations.dcc`, including named commands and declared state.
 
+## Codex compatibility
+
+The Codex feature from version `0.2.0` requires dcc `0.4.0` or newer. It keeps executable packages in the image while persisting user settings and history. Existing package directories in persistent state are preserved in recovery directories when dcc replaces them with links to the image packages. Rebuild the profile to update Codex; the default version is `latest`. See [Codex persistence](readme/CODEX-PERSISTENCE.md) for the layout and qualification status.
+
 ## Distributing Features
 
 ### Versioning

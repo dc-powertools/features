@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run inside the unpublished pilot image, after dcc persistence preparation.
+# Verify the image-controlled package layout after installation or dcc preparation.
 set -eu
 _LIB="$(cd "$(dirname "$0")/.." && pwd)/dev-container-features-test-lib"
 # shellcheck source=../dev-container-features-test-lib

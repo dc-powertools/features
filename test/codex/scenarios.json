@@ -9,7 +9,7 @@
         "image": "mcr.microsoft.com/devcontainers/base:debian",
         "features": {
             "codex": {
-                "version": "0.156.1"
+                "version": "0.170.0"
             }
         }
     }

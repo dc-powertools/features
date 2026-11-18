@@ -80,7 +80,7 @@ Install scripts follow a consistent pattern:
 The `claude` and `codex` features download their live official installers to temporary files and run them as the remote user because they install into `~/.local/bin`. They then create system-wide symlinks as root.
 
 - `claude` fetches `https://claude.ai/install.sh` and runs it with Bash, passing the requested version as an argument.
-- `codex` fetches `https://chatgpt.com/codex/install.sh` and sets `CODEX_RELEASE` to the requested version. It also installs `procps` when `ps` is missing so Codex can manage its background server.
+- `codex` fetches `https://chatgpt.com/codex/install.sh` and sets `CODEX_RELEASE` to the requested version. It also installs `procps` when `ps` is missing so Codex can manage its background server. Both CLI and daemon packages are provisioned in the image. The installer relocates `~/.codex/packages` and `~/.codex/tmp` to `/opt/dcc-local/codex` in the same installation layer and leaves symlinks at their original paths. The Feature requires dcc 0.4.0 or newer to repair these exclusions after attaching persistent state, before lifecycle hooks; settings, history, daemon preferences, and `.tmp` marketplace data remain persistent. Rebuild the image to update or roll back the durable package version.
 
 ### `postStart.sh`
 

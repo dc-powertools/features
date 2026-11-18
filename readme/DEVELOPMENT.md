@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- [dcc](https://github.com/dc-powertools/dcc) 0.1.9 or newer — to validate metadata and build and run features locally
+- [dcc](https://github.com/dc-powertools/dcc) 0.4.0 or newer — to validate metadata and build and run features locally
 - `shellcheck` — shell script linter (`apt install shellcheck` / `brew install shellcheck`)
 - `jq` — parses Feature option names and scenario metadata
 - `bash` 4+ and standard POSIX utilities (`awk`, `grep`, `sha256sum`, `tar`)

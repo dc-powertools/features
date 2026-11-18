@@ -15,3 +15,5 @@ check "codex is installed" codex --version
 check "ps supports daemon process inspection" ps -p "$$" -o stat= -o lstart=
 
 reportResults
+
+bash "$(dirname "$0")/persistence.sh"
